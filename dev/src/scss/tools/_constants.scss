@@ -1,0 +1,13 @@
+// Для adapt()
+// - ширина полотна (макета)
+$templateWidth: 1920;
+// - минимальная ширина страницы
+$finishBreakpoint: 360;
+$unitsDefault: ""; // px / rem / ''
+
+$laptop: 1440.98;
+$laptop-sm: 1200.98;
+$tablet: 1024.98;
+$tablet-sm: 992.98;
+$mobile: 768.98;
+$mobile-sm: 576.98;

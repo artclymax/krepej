@@ -1,0 +1,111 @@
+@use "tools/constants" as *;
+@use "tools/functions" as *;
+@use "tools/mixins" as *;
+@use "tools/mixins-typography" as *;
+
+// LIBS
+@use "base/normalize";
+////@use "../../node_modules/ion-rangeslider/css/ion.rangeSlider.min.css";
+////@use "../../node_modules/@fancyapps/ui/dist/fancybox/fancybox.css";
+
+// BASE
+////@use "base/fonts";
+@use "base/vars";
+@use "base/resets";
+@use "base/global";
+@use "base/utils";
+////@use "base/_components.scss";
+
+// COMPONENTS
+@use "components/_logo.scss";
+@use "components/_btn.scss";
+@use "components/_icon.scss";
+@use "components/_typography.scss";
+@use "components/_grid.scss";
+@use "components/_header-menu.scss";
+@use "components/_swiper.scss";
+@use "components/_navxt_breadcrumbs.scss";
+@use "components/_form.scss";
+//@use "components/_contacts.scss";
+@use "components/_custom-select.scss";
+//@use "components/_cf-select.scss";
+//@use "components/_running-line.scss";
+//@use "components/_scroll-to-top.scss";
+@use "components/_modal.scss";
+//@use "components/_tabs.scss";
+//@use "components/_cookie-banner.scss";
+//@use "components/_cookie-banner-2.scss";
+//@use "components/_cookie-banner-3.scss";
+//@use "components/_wp-block.scss";
+@use "components/_pagination.scss";
+//@use "components/_hero-404.scss";
+//@use "components/_hero-page.scss";
+//@use "components/_category.scss";
+//@use "components/_map-scroll-lock.scss";
+//@use "components/_table.scss";
+//@use "components/_footer-menu.scss";
+//@use "components/_form-input.scss";
+//@use "components/_phone-box.scss";
+//@use "components/_swiper-components.scss";
+//@use "components/_theme-switcher.scss";
+//@use "components/_mega-menu.scss";
+//@use "components/_mega-menu-2.scss";
+//@use "components/_quiz.scss";
+//@use "components/_select-from-acf.scss";
+
+//! === для интернет-магазина + header возьми
+//@use "components/_aws-search.scss";
+//@use "components/_bottom-menu.scss";
+//@use "components/_catalog-menu.scss";
+
+// SECTIONS
+@use "components/_hero-page.scss";
+@use "components/_components.scss";
+//@use "sections/_section-header.scss";
+@use "sections/_header.scss";
+@use "sections/_header-catalog.scss";
+@use "sections/_footer.scss";
+//@use "sections/_footer.scss";
+//@use "sections/_hero-404.scss";
+@use "sections/_product-card.scss";
+
+// home
+@use "sections/_home-hero.scss";
+@use "sections/_home-categories.scss";
+@use "sections/_home-featured-products.scss";
+@use "sections/_home-about.scss";
+
+// catalog
+@use "sections/_archive-product.scss";
+@use "sections/_archive-product-cat.scss";
+@use "sections/_single-product.scss";
+@use "sections/_related-products.scss";
+
+@use "sections/_section-form.scss";
+@use "sections/_cart-page.scss";
+@use "sections/_checkout-page.scss";
+@use "sections/_notices.scss";
+@use "sections/_page-success-order.scss";
+
+// contacts
+@use "sections/_page-contacts.scss";
+
+// vakansii
+@use "sections/_page-vakansii.scss";
+
+@use "sections/_page-404.scss";
+
+#wpadminbar {
+	position: fixed;
+}
+.main {
+	& > *:last-child {
+		//padding-bottom: var(--section-padding);
+	}
+}
+.page-template-page-cart .wrapper {
+	overflow: initial;
+}
+//* {
+//	outline: 1px solid red;
+//}

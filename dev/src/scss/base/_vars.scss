@@ -1,0 +1,39 @@
+@use "../tools" as *;
+
+:root {
+	--color-0: rgba(0, 0, 0, 0);
+	--color-black: #000;
+	--color-white: #fff;
+
+	// ===== Colors  =====
+	--color-dark: #282828;
+	--color-text: #333;
+	--color-accent: #f07f1c;
+	--color-accent-hover: #f4933d;
+	--color-gray: #ebebeb;
+	--color-gray-border: #c8c4bb;
+	--color-gray-second: #656565;
+	--color-gray-dark: #434342;
+
+	// ===== Layouts =====
+	--header-height: 100px;
+
+	@include media($tablet) {
+		--header-height: 76px;
+	}
+
+	--section-padding: #{adapt(112, 56)};
+	--section-padding-05: #{adapt(56, 28)};
+	--section-padding-025: #{adapt(28, 14)};
+	--section-gap: #{adapt(60, 40)};
+
+	--container-width: 1200px;
+	--container-padding: 10px;
+
+	// ===== Fonts =====
+	--font-size-html: 100%;
+	--font-size: 16px;
+	--font-family-main: "Montserrat-VF", "Montserrat", sans-serif;
+	--line-height: 130%;
+	--letter-spacing: 0;
+}

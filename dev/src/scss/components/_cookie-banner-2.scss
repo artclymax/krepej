@@ -1,0 +1,122 @@
+@use "../tools" as *;
+
+.cookie-banner {
+	position: fixed;
+	bottom: 10px;
+	left: 50%;
+	background: var(--color-neutral-palette-neutral-50);
+	color: inherit;
+	z-index: 9999;
+	border: 2px solid var(--color-brand-primary-600);
+	border-radius: adapt(25, 12);
+	max-width: 852px;
+	width: 100%;
+	transition:
+		opacity 0.4s ease,
+		visibility 0.4s ease,
+		transform 0.4s ease;
+	opacity: 1;
+	visibility: visible;
+	transform: translateX(-50%) translateY(0);
+
+	@include media($laptop-sm) {
+		max-width: 100%;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		transform: translateX(0) translateY(0);
+	}
+	@include media($mobile) {
+		//@include text-s;
+		
+	}
+	&.hide {
+		opacity: 0;
+		visibility: hidden;
+		pointer-events: none;
+		transform: translateX(-50%) translateY(100%);
+
+		@include media($laptop-sm) {
+			transform: translateX(0) translateY(100%);
+		}
+	}
+
+	&__container {
+		padding: adapt(20, 10);
+		display: flex;
+		gap: adapt(60, 16);
+		justify-content: space-between;
+		align-items: center;
+
+		@include media($tablet) {
+			flex-wrap: wrap;
+		}
+	}
+
+	&__content {
+		@include reset;
+		flex: 0 1 459px;
+	}
+	&__title {
+		font-size: adapt(18, 16);
+		font-weight: 400;
+		display: flex;
+		gap: 12px;
+		align-items: center;
+		@include reset;
+		margin-bottom: adapt(15, 12);
+
+		svg {
+			color: var(--color-accent-accent-600);
+		}
+	}
+
+	&__text {
+		//font-weight: 200;
+		@include body-m;
+		@include media($mobile) {
+			//font-weight: 400;
+			@include body-s;
+		}
+		a {
+			display: inline-flex;
+			text-decoration: none;
+			color: inherit;
+			transition: all 0.3s;
+			@include hover-link;
+		}
+	}
+
+	&__buttons {
+		display: flex;
+		flex-direction: column;
+		gap: adapt(20, 12);
+		flex: 1 1 auto;
+		@include media($mobile-sm) {
+			flex: 1 1 100%;
+			flex-wrap: wrap;
+			width: 100%;
+		}
+	}
+
+	&__btn.btn {
+		max-width: 100%;
+		width: 100%;
+		flex-shrink: 0;
+		@include media($mobile-sm) {
+			flex: 1;
+			width: 100%;
+			line-height: 110%;
+			max-width: 100%;
+		}
+	}
+
+	.btn--stroke {
+		//background: var(--color-0);
+		//color: var(--color-text-on-dark);
+		//color: var(--black-900);
+		@include hover {
+			//opacity: 0.6;
+		}
+	}
+}

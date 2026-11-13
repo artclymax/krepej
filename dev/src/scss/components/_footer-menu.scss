@@ -1,0 +1,111 @@
+@use "../tools" as *;
+
+.footer-menu {
+	font-size: adapt(16, 14);
+	ul {
+		@include reset;
+		list-style-type: none;
+	}
+	& > ul {
+		display: flex;
+		flex-wrap: wrap;
+		@include media($mobile) {
+			flex-direction: column;
+			text-align: left;
+			align-items: flex-start;
+			flex-wrap: nowrap;
+		}
+	}
+	li {
+		position: relative;
+		padding: 18px 30px;
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+		@include media($mobile) {
+			padding-left: unset;
+			align-items: flex-start;
+			width: 100%;
+		}
+
+		&.menu-item-has-children {
+			@include media($tablet, min) {
+				padding-right: 60px;
+			}
+			&::after {
+				content: "";
+				position: absolute;
+				top: 24px;
+				right: 30px;
+				width: 12px;
+				height: 9px;
+				flex-shrink: 0;
+				background-image: url("../../../../assets/images/icons/dropdown-icon.svg");
+				background-repeat: no-repeat;
+				background-position: center;
+				background-size: cover;
+				transition: all 0.3s;
+			}
+		}
+
+		&.active .sub-menu {
+			opacity: 1;
+			visibility: visible;
+			pointer-events: all;
+
+			@include media($tablet) {
+				height: 100%;
+				transform: translateY(0);
+			}
+		}
+
+		@include hover {
+			.sub-menu {
+				opacity: 1;
+				visibility: visible;
+				pointer-events: all;
+				transform: translateY(0);
+			}
+		}
+	}
+	a {
+		text-decoration: none;
+		color: inherit;
+		display: inline-flex;
+		text-transform: uppercase;
+		font-weight: 500;
+		transition: all 0.3s;
+
+		@include hover {
+			opacity: 0.6;
+		}
+	}
+	.sub-menu {
+		//@extend .header-menu-box;
+		border: 1px solid var(--color-dark);
+		background: rgba(255, 255, 255, 1);
+		position: absolute;
+		z-index: 2;
+		top: 100%;
+		left: 0;
+		min-width: min-content;
+		width: 100%;
+		opacity: 0;
+		pointer-events: none;
+		visibility: hidden;
+		transform: translateY(-100%);
+		li {
+			padding: 10px;
+		}
+		@include media($tablet) {
+			position: static;
+			height: 0;
+			border-right: 0;
+			border-left: 0;
+			width: 100%;
+
+			&.active {
+			}
+		}
+	}
+}

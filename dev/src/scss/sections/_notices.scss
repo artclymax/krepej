@@ -1,0 +1,93 @@
+/* ===== Стили для уведомлений на чекауте ===== */
+.pc-notices {
+	animation: pc-notice-fade-in 0.3s ease-out;
+}
+
+.pc-notices:empty {
+	display: none !important;
+}
+
+/* Основной блок ошибки */
+.pc-notices ul.woocommerce-error {
+	background-color: #fdf2f2;
+	border: 1px solid #f5c6cb;
+	border-left: 4px solid #dc3545; /* Красный акцент слева */
+	border-radius: 8px;
+	padding: 16px 40px 16px 48px; /* Отступ слева под иконку, справа под крестик */
+	margin: 0;
+	list-style: none;
+	position: relative;
+	color: #721c24;
+	font-size: 15px;
+	line-height: 1.5;
+	box-shadow: 0 2px 8px rgba(220, 53, 69, 0.08);
+}
+
+/* Элемент списка */
+.pc-notices ul.woocommerce-error li {
+	margin: 0;
+	padding: 0;
+	position: relative;
+}
+
+/* Иконка восклицательного знака (SVG) */
+.pc-notices ul.woocommerce-error li::before {
+	content: "";
+	position: absolute;
+	left: -28px;
+	top: 2px;
+	width: 20px;
+	height: 20px;
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23dc3545'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z'/%3E%3C/svg%3E");
+	background-size: contain;
+	background-repeat: no-repeat;
+}
+
+/* Ссылки внутри ошибки (если есть) */
+.pc-notices ul.woocommerce-error li a {
+	color: #721c24;
+	font-weight: 600;
+	text-decoration: underline;
+}
+.pc-notices ul.woocommerce-error li a:hover {
+	color: #491217;
+}
+
+/* Кнопка закрытия (крестик) */
+.pc-notice-close {
+	position: absolute;
+	top: 12px;
+	right: 12px;
+	width: 24px;
+	height: 24px;
+	background: transparent;
+	border: none;
+	color: #dc3545;
+	font-size: 22px;
+	line-height: 1;
+	cursor: pointer;
+	opacity: 0.5;
+	transition: all 0.2s ease;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 0;
+}
+
+.pc-notice-close:hover {
+	opacity: 1;
+	background: rgba(220, 53, 69, 0.1);
+	border-radius: 4px;
+}
+
+/* Анимация плавного появления */
+@keyframes pc-notice-fade-in {
+	from {
+		opacity: 0;
+		transform: translateY(-10px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}

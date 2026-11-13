@@ -1,0 +1,59 @@
+@use "../tools" as *;
+
+.archive-vacancies {
+	&__container {
+	}
+
+	&__list {
+		@include flex-column;
+		gap: adapt(24, 12);
+	}
+
+	&__item {
+	}
+
+	&__empty {
+	}
+}
+
+.vacancy-card {
+	background: var(--color-white);
+	padding: adapt(12, 10, $mobile) adapt(20, 10, $mobile);
+	box-shadow:
+		-3px -3px 10px 0 rgba(129, 129, 129, 0.08),
+		3px 3px 10px 0 rgba(129, 129, 129, 0.08);
+	display: grid;
+	grid-template-columns: 1fr 0.5fr 0.5fr;
+	gap: 12px;
+	align-items: center;
+	@include media($mobile) {
+		grid-template-columns: 1fr;
+	}
+	&__info {
+		@include flex-column;
+		gap: 10px;
+	}
+
+	&__title {
+	}
+
+	&__location {
+		color: #999;
+	}
+
+	&__salary {
+	}
+
+	&__descr {
+		grid-column: 1 / -1;
+		color: #999;
+	}
+
+	&__btn {
+		@include media($mobile, min) {
+			grid-column: 3;
+			grid-row: 1;
+			justify-self: end;
+		}
+	}
+}

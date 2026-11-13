@@ -1,0 +1,93 @@
+@use "../tools" as *;
+
+.theme-switcher {
+	&__btn {
+		@include reset;
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		background: var(--color-0);
+		border: none;
+		cursor: pointer;
+	}
+
+	/* ===== ICON WINDOW ===== */
+	&__icon-box {
+		width: 20px;
+		height: 20px;
+		overflow: hidden;
+		position: relative;
+	}
+
+	/* ===== ICON TRACK ===== */
+	&__icons {
+		display: flex;
+		gap: 8px;
+		width: 48px;
+		transition: transform 0.3s ease;
+		transform: translateX(0);
+	}
+
+	[data-theme="dark"] &__icons {
+		transform: translateX(-28px);
+	}
+
+	/* ===== ICON ===== */
+	&__icon {
+		flex-shrink: 0;
+		@include square(20px);
+		background-position: center;
+		background-size: contain;
+		background-repeat: no-repeat;
+		transition: opacity 0.2s ease;
+	}
+
+	&__icon--light {
+		background-image: url("./../../../public/images/icons/theme-light.svg");
+	}
+
+	&__icon--dark {
+		background-image: url("./../../../public/images/icons/theme-dark.svg");
+	}
+
+
+	/* ===== SWITCH AREA ===== */
+	&__area {
+		width: 49px;
+		height: 26px;
+		border-radius: 12px;
+		background: #e4e4e4;
+		position: relative;
+		overflow: hidden;
+		transition: background 0.3s ease;
+
+		[data-theme="dark"] & {
+			background: var(--accent-gradient);
+		}
+	}
+
+	/* ===== CIRCLE ===== */
+	&__circle {
+		position: absolute;
+		top: 50%;
+		right: calc(100% - 3px);
+		transform: translateY(-50%) translateX(100%);
+		@include square(20px);
+		border-radius: 50%;
+		background:
+			linear-gradient(180deg, #fff 0%, #eff2ff 100%),
+			linear-gradient(180deg, rgba(255, 255, 255, 0.8) 4.08%, rgba(255, 255, 255, 0) 45.19%);
+		box-shadow:
+			0 12px 30px rgba(0, 0, 0, 0.08),
+			0 2px 6px rgba(0, 0, 0, 0.06);
+		transition:
+			transform 0.3s ease,
+			right 0.3s ease;
+		z-index: 2;
+
+		[data-theme="dark"] & {
+			right: 3px;
+			transform: translateY(-50%) translateX(0);
+		}
+	}
+}

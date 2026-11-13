@@ -1,0 +1,101 @@
+@use "../tools" as *;
+@use "../components/form" as *;
+
+.cf-select-custom {
+	flex-shrink: 0;
+	position: relative;
+	z-index: 2;
+	//@include break-word;
+	&.active {
+		&::after {
+			transform: translateY(-50%) rotate(180deg);
+		}
+	}
+	&::after {
+		content: "";
+		position: absolute;
+		height: 80%;
+		width: 14px;
+		right: 25px;
+		line-height: 1;
+		top: 50%;
+		transform: translateY(-50%);
+		pointer-events: none;
+		background-image: url("../../../public/images/icons/arrow-down.svg");
+		background-repeat: no-repeat;
+		background-position: center;
+		background-size: contain;
+		transition: all 0.3s;
+	}
+	&__field {
+		width: 100%;
+		padding-right: 50px;
+	}
+	&__list {
+		@include reset;
+		list-style-type: none;
+		position: absolute;
+		z-index: 3;
+		bottom: 0;
+		left: 0;
+		width: 100%;
+		max-height: 200px;
+		overflow-y: auto;
+		overflow-x: hidden;
+		transform: translateY(30px);
+		visibility: hidden;
+		opacity: 0;
+		pointer-events: none;
+		//display: none;
+		background: var(--color-surface-card);
+		transition: all 0.3s;
+		.active & {
+			//display: block;
+			transform: translateY(100%);
+			visibility: visible;
+			opacity: 1;
+			pointer-events: all;
+		}
+	}
+	&__btn {
+		text-align: left;
+		background: var(--color-0);
+		padding: 6px 12px;
+		width: 100%;
+		transition: all 0.3s;
+
+		@include hover {
+			background: var(--color-gray);
+		}
+		&.active {
+			background: #cecece;
+		}
+	}
+}
+
+// custom code here
+.cf-select-custom {
+	&::after {
+		//background-color: var(--color-light-2);
+	}
+	&__field {
+		@extend .form-input;
+	}
+	&__list {
+		border: 1px solid var(--color-border);
+		color: var(--color-text-primary);
+	}
+	&__btn {
+		border: 1px solid var(--color-accent);
+		@extend .form-input;
+		padding: 16px;
+		
+		&.active {
+			background: var(--color-border) !important;
+		}
+
+		@include hover {
+			background: var(--color-gray-bd);
+		}
+	}
+}

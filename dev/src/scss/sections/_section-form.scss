@@ -1,0 +1,60 @@
+@use "../tools" as *;
+
+.section-form {
+	&__container {
+	}
+
+	&__grid {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.1);
+
+		@include media($mobile) {
+			grid-template-columns: 1fr;
+		}
+	}
+
+	&__content {
+		padding: adapt(45, 24, $mobile) adapt(56, 10, $mobile);
+		background: var(--color-white);
+		@include flex-column;
+		gap: 20px;
+	}
+
+	&__title {
+	}
+
+	&__descr {
+		font-weight: 500;
+	}
+
+	&__form {
+	}
+
+	&__image {
+		position: relative;
+		overflow: hidden;
+		@include media($mobile) {
+			height: 340px;
+		}
+		&::before {
+			content: "";
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			z-index: 2;
+			background:
+				linear-gradient(270deg, rgba(255, 255, 255, 0) 84.78%, #fff 98.91%),
+				linear-gradient(293.9deg, rgba(255, 255, 255, 0) 68.3%, rgba(255, 255, 255, 0.44) 79.46%),
+				linear-gradient(255.52deg, rgba(255, 255, 255, 0) 74.96%, rgba(255, 255, 255, 0.44) 82.89%);
+			@include media($mobile) {
+				background:
+					linear-gradient(0deg, rgba(255, 255, 255, 0) 84.78%, #fff 98.91%),
+					linear-gradient(23.9deg, rgba(255, 255, 255, 0) 68.3%, rgba(255, 255, 255, 0.44) 79.46%),
+					linear-gradient(345.52deg, rgba(255, 255, 255, 0) 74.96%, rgba(255, 255, 255, 0.44) 82.89%);
+			}
+		}
+	}
+}

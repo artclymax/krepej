@@ -1,0 +1,87 @@
+@use "../tools" as *;
+
+//!=====================================
+.archive-product-cat {
+	&__container {
+		@include flex-column;
+		gap: adapt(44, 24, $mobile);
+	}
+
+	&__subcats {
+	}
+
+	&__subcats-grid {
+		--min: 180px;
+		gap: 24px;
+
+		@include media($mobile) {
+			--min: 160px;
+			gap: 16px 8px;
+		}
+	}
+
+	&__subcat-card {
+		&.is-active {
+			.product-cat-card__title {
+				color: var(--color-accent);
+			}
+		}
+	}
+
+	&__toolbar {
+	}
+
+	&__sorting {
+		display: flex;
+		gap: 20px;
+		font-weight: 500;
+	}
+
+	&__sorting-label {
+		flex-shrink: 0;
+
+		@include media($mobile) {
+			display: none;
+		}
+	}
+
+	&__sorting-list {
+		@include reset-list;
+		display: flex;
+		gap: 20px;
+		flex-wrap: wrap;
+	}
+
+	&__sorting-item {
+	}
+
+	&__sorting-link {
+		@include hover-link(var(--color-accent));
+		color: var(--color-gray-second);
+
+		&.is-active {
+			color: var(--color-accent);
+		}
+	}
+
+	&__grid {
+		gap: 24px;
+		--min: 280px;
+
+		@include media($mobile) {
+			gap: 16px 8px;
+		}
+	}
+
+	&__pagination {
+		display: flex;
+		justify-content: center;
+	}
+
+	&__empty {
+	}
+}
+.product-cat-card {
+	&__title {
+	}
+}

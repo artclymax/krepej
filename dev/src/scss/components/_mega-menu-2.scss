@@ -1,0 +1,128 @@
+@use "../tools" as *;
+// ============================================
+// ПЕРЕМЕННЫЕ
+// ============================================
+
+$primary-bg: var(--card-section);
+$mega-menu-bg: var(--card-section);
+$text-color: var(--main-text);
+$hover-color: var(--btn-primary);
+$transition-speed: 0.3s;
+$font-family: var(--font-family-main);
+$container-max-width: 1220px;
+// ============================================
+// МИКСИНЫ
+// ============================================
+
+@mixin transition($property: all, $duration: $transition-speed) {
+	transition: $property $duration ease;
+}
+
+@mixin flex-center {
+	display: flex;
+	align-items: center;
+}
+
+@mixin hover-effect {
+	@include hoverSlideBgText(var(--main-text), var(--btn-primary));
+}
+
+.mega-menu {
+	@include reset;
+	list-style: none;
+	position: relative;
+	display: flex;
+	flex-wrap: wrap;
+	gap: adapt(24, 10, $tablet);
+
+	> .menu-item {
+		position: relative;
+
+		> a {
+			display: block;
+			padding-block: 20px;
+			font-weight: 600;
+			text-decoration: none;
+			@include hover-effect;
+		}
+
+		&.is-open > .sub-menu {
+			opacity: 1;
+			visibility: visible;
+			transform: translateY(0);
+		}
+
+		> .sub-menu {
+			position: absolute;
+			top: 100%;
+			left: 0;
+			width: 100vw; // фон на всю ширину
+			padding: 0;
+			margin: 0;
+			list-style: none;
+			opacity: 0;
+			visibility: hidden;
+			transform: translateY(-10px);
+			transition: all 0.3s ease;
+			z-index: 1000;
+
+			// фон подложка
+			&::before {
+				content: "";
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100vw;
+				height: 100%;
+				background-color: $mega-menu-bg;
+				z-index: -1;
+			}
+
+			// контейнер контента
+			> li {
+				max-width: $container-max-width;
+				margin: 0 auto;
+				display: grid;
+				grid-template-columns: repeat(3, 1fr);
+				gap: adapt(80, 40, $tablet) adapt(60, 24, $tablet);
+				max-height: 400px; // ограничение по высоте для скролла
+				overflow-y: auto;
+				padding: 40px 0;
+
+				> .menu-item > a {
+					display: block;
+					margin-bottom: 24px;
+					font-weight: 600;
+					color: $text-color;
+					text-decoration: none;
+					@include hover-effect;
+				}
+
+				> .sub-menu {
+					display: flex;
+					flex-direction: column;
+					gap: 16px;
+
+					> .menu-item > a {
+						font-size: 1rem;
+						font-weight: 500;
+					}
+				}
+			}
+
+			@include media($tablet) {
+				position: static;
+				display: none;
+				> li {
+					display: block;
+					max-height: none;
+					overflow: visible;
+					grid-template-columns: 1fr;
+				}
+				&::before {
+					display: none;
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,77 @@
+*,
+*::before,
+*::after {
+	box-sizing: inherit; //! обязательно, т.к. многие библиотеки и плагины имеют свой box-sizing
+	line-height: inherit;
+	// для старых браузеров
+	white-space: normal;
+	word-break: break-word;
+	overflow-wrap: break-word;
+	min-width: 0;
+	//hyphens: auto;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	//color: var(--color-dark-2);
+	//hyphens: auto; // для правильного переноса слов
+	//text-wrap: balance; // выравнивает текста, чтобы они хорошо смотрелись
+}
+
+//a:where([class]),
+//a:where([class]):visited,
+//a:where([class]):active {
+//	text-decoration: none;
+//}
+//:where([fill]:not([fill="none"], [fill^="url"])) {
+//	fill: currentColor;
+//}
+//:where([stroke]:not([stroke="none"], [stroke^="url"])) {
+//	stroke: currentColor;
+//}
+//svg * {
+//	transition-property: fill, stroke;
+//}
+//:where(table) {
+//	border-collapse: collapse;
+//	border-color: currentColor;
+//}
+
+input,
+button,
+label,
+textarea,
+select,
+option {
+	font: inherit;
+	color: inherit;
+	cursor: pointer;
+}
+
+input::-ms-clear {
+	display: none;
+}
+
+img,
+picture,
+video,
+svg,
+source {
+	max-width: 100%;
+	width: auto;
+	height: auto;
+}
+
+//input[type="number"]::-webkit-inner-spin-button,
+//input[type="number"]::-webkit-outer-spin-button {
+//	-webkit-appearance: none;
+//	margin: 0;
+//}
+
+//input[type="number"] {
+//	-moz-appearance: textfield;
+//}

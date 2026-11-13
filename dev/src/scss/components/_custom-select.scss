@@ -1,0 +1,119 @@
+@use "../tools" as *;
+
+.form-select,
+.custom-select-hidden {
+	display: none;
+}
+.custom-select {
+	position: relative;
+	z-index: 3;
+	flex-shrink: 0;
+	//color: var(--color-second-text);
+
+	&__select-field {
+		@include reset;
+		text-align: left;
+		border: none;
+		background: var(--color-0);
+		width: 100%;
+
+		//================
+
+		//border: 1px solid var(--color-0);
+		//border-radius: 14px;
+		padding: 20px;
+		min-width: 240px;
+		width: 100%;
+		border: 1px solid var(--color-0);
+		padding: 10px 0px;
+		transition: all 0.3s ease-in-out;
+		background: var(--color-0);
+
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		justify-content: space-between;
+		color: var(--color-accent);
+		font-weight: 500;
+
+		.custom-select-active & {
+			//outline: 2px solid var(--color-accent);
+		}
+		&::after {
+			content: "";
+			flex-shrink: 0;
+			@include square(16px);
+			border-radius: 50%;
+			//background-color: var(--color-warm-bg);
+			@include bgimg(url("../../../public/icons/select-icon.svg"));
+			transition: all 0.3s;
+
+			.custom-select-active & {
+				transform: rotate(180deg);
+			}
+		}
+	}
+
+	&__list {
+		@include reset-list;
+		@include flex-column;
+		//border: 1px solid var(--color-dark-text);
+		box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.25);
+		background: var(--color-white);
+
+		position: absolute;
+		z-index: 6;
+		bottom: 0;
+		left: 0;
+		width: 100%;
+		max-height: 210px;
+		transform: translateY(80%);
+		transition: all 0.3s;
+		opacity: 0;
+		pointer-events: none;
+		visibility: hidden;
+
+		overflow: auto;
+		@include custom-scroll(var(--color-text-secondary), var(--color-bg-subtle), thin);
+		padding-block: 10px;
+
+		.custom-select-active & {
+			transform: translateY(100%);
+			opacity: 1;
+			visibility: visible;
+			pointer-events: auto;
+		}
+	}
+
+	&__item {
+		&:not(:last-child) {
+			border-bottom: 1px solid var(--color-dark-text);
+		}
+	}
+
+	&__btn {
+		@include reset;
+		text-align: left;
+		border: none;
+		background: var(--color-0);
+		width: 100%;
+		//================
+		//@include text-btn-l;
+		padding: 8px 20px;
+		transition: all 0.3s;
+		color: #999;
+
+		&.active {
+			//background: var(--color-border);
+			color: var(--color-accent);
+
+			@include hover {
+				//background: var(--color-border);
+			}
+		}
+
+		@include hover {
+			background: var(--color-border);
+		}
+	}
+}

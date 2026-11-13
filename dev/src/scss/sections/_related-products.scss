@@ -1,0 +1,18 @@
+@use "../tools" as *;
+
+.related-products {
+	&__container {
+	}
+
+	&__title {
+	}
+
+	&__grid {
+		gap: 24px;
+		--min: 280px;
+
+		@include media($mobile) {
+			gap: 16px 8px;
+		}
+	}
+}

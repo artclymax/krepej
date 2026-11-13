@@ -1,0 +1,35 @@
+@use "../tools" as *;
+
+.page-404 {
+	padding-top: 24px;
+	&__container {
+		@include flex-column;
+		gap: adapt(44, 24);
+	}
+
+	&__hero {
+		@include flex-column;
+		gap: adapt(56, 32);
+	}
+
+	&__breadcrumbs {
+	}
+	&__content {
+		@include flex-column;
+		gap: 24px;
+		align-items: center;
+		text-align: center;
+	}
+
+	&__title {
+		text-align: center;
+	}
+
+	&__descr {
+		font-size: 18px;
+		font-weight: 700;
+	}
+
+	&__btn {
+	}
+}

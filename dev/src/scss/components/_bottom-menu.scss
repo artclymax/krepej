@@ -1,0 +1,107 @@
+@use "../tools" as *;
+
+.bottom-menu {
+	@include media($tablet) {
+		position: fixed;
+		bottom: 0;
+		left: 0;
+		width: 100%;
+		padding: adapt(15, 10, $finishBreakpoint, $tablet) adapt(20, 10, $finishBreakpoint, $tablet);
+		background: var(--color-white);
+		box-shadow: 0 -4px 10px 0 rgba(0, 0, 0, 0.05);
+	}
+	&--home {
+		@include media($tablet, min) {
+			display: none;
+		}
+	}
+	&--catalog {
+		@include media($tablet, min) {
+			display: none;
+		}
+	}
+	&--cart {
+		@include media($tablet, min) {
+			order: 1;
+		}
+	}
+	&--account {
+	}
+	&--menu {
+		@include media($tablet, min) {
+			display: none;
+		}
+	}
+	&__list {
+		@include reset-list;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 24px;
+		@include media($tablet) {
+			gap: 20px;
+		}
+	}
+
+	&__item {
+	}
+
+	&__link {
+		text-decoration: none;
+	}
+	&__button {
+		background: var(--color-0);
+		border: none;
+	}
+	&__link,
+	&__button {
+		color: var(--color-gray);
+		@include flex-column;
+		align-items: center;
+		justify-content: space-between;
+		text-align: center;
+		gap: 4px;
+		position: relative;
+		font-size: 14px;
+		min-width: 47px;
+		transition: all 0.3s;
+
+		@include hover {
+			color: var(--color-blue-hover);
+		}
+		&.active {
+			color: var(--color-blue-hover);
+		}
+
+		@include media($tablet) {
+			font-size: 12px;
+		}
+	}
+
+	&__icon {
+		@include square(24px);
+	}
+
+	&__text {
+	}
+
+	&__cart-counter {
+		position: absolute;
+		top: -6px;
+		right: 6px;
+
+		@include square(16px);
+		@include flex-center;
+		border-radius: 50%;
+		background: var(--color-blue);
+
+		color: var(--color-white);
+		font-size: 10px;
+		text-transform: uppercase;
+		text-align: center;
+	}
+}
+.bottom-menu-catalog-btn {
+}
+.bottom-header-menu-btn {
+}

@@ -1,0 +1,51 @@
+@use "../tools" as *;
+
+.none {
+	display: none !important;
+}
+
+.no-scroll {
+	overflow: hidden;
+}
+
+.visually-hidden {
+	@include visually-hidden;
+}
+
+.hidden-mobile {
+	@include media($mobile, max) {
+		display: none !important;
+	}
+}
+
+.visible-tablet {
+	@include media($tablet, min) {
+		display: none !important;
+	}
+}
+.hidden-tablet {
+	@include media($tablet, max) {
+		display: none !important;
+	}
+}
+
+.visible-mobile {
+	@include media($mobile, min) {
+		display: none !important;
+	}
+}
+
+// для column
+.no-break {
+	break-inside: avoid;
+}
+.full-bg {
+	@include media($mobile, max) {
+		display: none;
+	}
+}
+.mobile-bg {
+	@include media($mobile, min) {
+		display: none;
+	}
+}

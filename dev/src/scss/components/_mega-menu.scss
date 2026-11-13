@@ -1,0 +1,303 @@
+@use "../tools" as *;
+
+// ============================================
+// ПЕРЕМЕННЫЕ
+// ============================================
+
+$primary-bg: var(--card-section);
+$mega-menu-bg: var(--card-section);
+$text-color: var(--main-text);
+$hover-color: var(--btn-primary);
+$transition-speed: 0.3s;
+$font-family: var(--font-family-main);
+$container-max-width: 1220px;
+$bg-menu-height: 320px;
+
+// ============================================
+// МИКСИНЫ
+// ============================================
+
+@mixin transition($property: all, $duration: $transition-speed) {
+	transition: $property $duration ease;
+}
+
+@mixin flex-center {
+	display: flex;
+	align-items: center;
+}
+
+@mixin hover-effect {
+	@include hoverSlideBgText(var(--main-text), var(--btn-primary));
+}
+
+// ============================================
+// ОСНОВНОЕ МЕНЮ (УРОВЕНЬ 1)
+// ============================================
+
+.mega-menu {
+	@include reset;
+	list-style: none;
+	position: relative;
+
+	@include flex-center;
+	justify-content: space-between;
+	flex-wrap: wrap;
+	gap: adapt(24, 10, $tablet);
+
+	@include media($tablet) {
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 0;
+	}
+
+	// ===== ФОН =====
+	&::before {
+		content: "";
+		position: absolute;
+		bottom: 0;
+		left: 50%;
+		width: 100vw;
+		background-color: $mega-menu-bg;
+		box-shadow: inset 0 10px 40px -10px rgba(76, 111, 255, 0.2);
+		border-top: 1px solid var(--bd-line);
+		border-bottom: 1px solid var(--bd-line);
+		height: $bg-menu-height;
+		opacity: 0;
+		transform: translateX(-50%) translateY(100%);
+		transition: opacity 0.3s ease;
+		pointer-events: none;
+
+		@include media($tablet) {
+			display: none;
+		}
+	}
+
+	@include media($tablet, min) {
+		&.has-sub-hover::before {
+			opacity: 1;
+		}
+	}
+
+	> .menu-item {
+		position: static;
+
+		@include media($tablet) {
+			position: relative;
+			width: 100%;
+		}
+
+		// ===== ССЫЛКА 1 УРОВНЯ =====
+		> a {
+			display: block;
+			padding-block: 20px;
+			font-size: 1rem;
+			font-weight: 600;
+			text-decoration: none;
+			cursor: pointer;
+			@include hover-effect;
+
+			@include media($tablet) {
+				padding-block: 14px;
+				border-bottom: 1px solid var(--bd-line);
+			}
+		}
+
+		// ===== OPEN (КЛИК) =====
+		&.is-open {
+			> a {
+				color: $hover-color;
+				background-position: 0;
+			}
+
+			> .sub-menu {
+				opacity: 1;
+				visibility: visible;
+				transform: translateY(0);
+
+				&::before {
+					opacity: 1;
+				}
+
+				@include media($tablet) {
+					display: flex;
+					flex-direction: column;
+					//padding-inline: 20px;
+					margin-top: 16px;
+				}
+			}
+		}
+
+		// ===== HOVER ТОЛЬКО ДЕСКТОП =====
+		@include media($tablet, min) {
+			@include hover {
+				> a {
+					color: $hover-color;
+					background-position: 0;
+				}
+
+				> .sub-menu {
+					opacity: 1;
+					visibility: visible;
+					transform: translateY(0);
+					pointer-events: initial;
+					&::before {
+						opacity: 1;
+					}
+				}
+			}
+		}
+
+		// =====================================
+		// МЕГАМЕНЮ (2 УРОВЕНЬ)
+		// =====================================
+
+		> .sub-menu {
+			position: absolute;
+			top: 100%;
+			left: 0;
+			right: 0;
+			max-width: $container-max-width;
+			margin: 0 auto;
+			padding: 40px 0;
+			list-style: none;
+
+			display: grid;
+			grid-template-columns: repeat(3, 1fr);
+			gap: adapt(80, 40, $tablet) adapt(60, 24, $tablet);
+
+			opacity: 0;
+			visibility: hidden;
+			transform: translateY(-10px);
+			@include transition(all);
+			z-index: 1000;
+			pointer-events: none;
+
+			height: $bg-menu-height;
+			overflow-y: auto;
+
+			// ===== MOBILE: БЕЗ АНИМАЦИИ =====
+			@include media($tablet) {
+				position: static;
+				display: none;
+				padding: 0;
+				margin: 0;
+				opacity: 1;
+				visibility: visible;
+				transform: none;
+				transition: none;
+				grid-template-columns: 1fr;
+				gap: 24px;
+				height: auto;
+				pointer-events: initial;
+			}
+
+			// ===== УРОВЕНЬ 2 =====
+			> .menu-item {
+				> a {
+					display: block;
+					margin-bottom: 24px;
+					font-weight: 600;
+					font-size: adapt(18, 16);
+					color: $text-color;
+					text-decoration: none;
+					@include hover-effect;
+
+					@include media($tablet) {
+						margin-bottom: 12px;
+					}
+				}
+
+				// ===== УРОВЕНЬ 3 =====
+				> .sub-menu {
+					list-style: none;
+					margin: 0;
+					padding: 0;
+					display: flex;
+					flex-direction: column;
+					gap: 16px;
+
+					@include media($tablet) {
+						gap: 12px;
+						padding-bottom: 16px;
+						border-bottom: 1px solid var(--bd-line);
+					}
+
+					> .menu-item > a {
+						font-size: 1rem;
+						font-weight: 500;
+						color: var(--main-text);
+						text-decoration: none;
+						@include hover-effect;
+
+						@include media($tablet) {
+							font-size: 0.9375rem;
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+// ============================================
+// СТРЕЛКИ
+// ============================================
+
+.mega-menu > .menu-item-has-children {
+	> a {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 8px;
+
+		@include media($tablet, min) {
+			justify-content: flex-start;
+		}
+
+		&::after {
+			content: "‹";
+			right: 0;
+			width: 20px;
+			height: 20px;
+			display: flex;
+			line-height: 1;
+			font-size: 26px;
+			font-weight: 300;
+			transform: rotate(-90deg) translateX(6px);
+			background: none;
+			background-image: none;
+			background-size: auto;
+			background-position: initial;
+			-webkit-background-clip: initial;
+			-webkit-text-fill-color: initial;
+			color: var(--main-text);
+			transition:
+				transform 0.3s ease,
+				color 0.3s ease;
+			flex-shrink: 0; // Стрелка не сжимается
+		}
+	}
+
+	@include media($tablet, min) {
+		&:hover > a::after {
+			color: var(--btn-primary-hover);
+		}
+	}
+
+	&.is-open > a::after {
+		color: var(--btn-primary-hover);
+	}
+}
+
+// ============================================
+// АКТИВНЫЕ ПУНКТЫ
+// ============================================
+
+.current-menu-item,
+.current-menu-ancestor,
+.current_page_item,
+.current_page_ancestor {
+	> a {
+		color: $hover-color;
+	}
+}

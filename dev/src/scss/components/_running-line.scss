@@ -1,0 +1,47 @@
+@use "../tools" as *;
+[data-running-line] {
+	--running-line-gap: 24px;
+	--running-line-speed: 45s;
+	--running-line-direction: forwards; // reverse
+
+	overflow: hidden;
+}
+
+[data-running-line="right"] {
+	--running-line-direction: reverse;
+}
+
+[data-running-line="left"] {
+	--running-line-direction: forwards;
+}
+[data-running-line-paused]:hover [data-running-line-list] {
+	animation-play-state: paused;
+}
+[data-running-line-reverse] [data-running-line-list] {
+	flex-direction: row-reverse;
+}
+[data-running-line-list] {
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+	display: flex;
+	gap: var(--running-line-gap);
+	width: max-content;
+	will-change: transform;
+	animation: runningLine var(--running-line-speed, 15s) var(--running-line-direction) infinite linear;
+}
+
+@keyframes runningLine {
+	$runningLineGap: var(--running-line-gap, 0);
+
+	to {
+		transform: translateX(calc(-50% - #{$runningLineGap} / 2));
+	}
+	//to {
+	//	@if ($runningLineGap == 0) {
+	//		transform: translateX(-50%);
+	//	} @else {
+	//		transform: translateX(calc(-50% - #{$runningLineGap} / 6));
+	//	}
+	//}
+}

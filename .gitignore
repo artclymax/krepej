@@ -1,0 +1,14 @@
+﻿dev/node_modules/
+dev/node_modules/*
+
+node_modules/
+dist/
+build/
+.sass-cache/
+.DS_Store
+Thumbs.db
+desktop.ini
+*.log
+*.tmp
+.vscode/
+.idea/

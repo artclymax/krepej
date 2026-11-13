@@ -1,0 +1,24 @@
+@use "../tools" as *;
+
+.wrapper {
+	position: relative;
+	z-index: 1;
+	&::before {
+		content: "";
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background: var(--bg-url) center / cover no-repeat;
+		z-index: -1;
+	}
+}
+.section-gap {
+	@include flex-column;
+	gap: adapt(44, 24, $mobile, $laptop-sm);
+}
+
+.main {
+	padding-bottom: var(--section-padding-05);
+}

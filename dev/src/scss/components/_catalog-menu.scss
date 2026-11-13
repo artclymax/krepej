@@ -1,0 +1,122 @@
+@use "../tools" as *;
+
+.catalog-menu {
+	--height: 60dvh;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	background: var(--color-light-2);
+	box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.05);
+	padding: 24px container-padding();
+	height: calc(var(--height) - var(--header-height));
+	overflow: auto;
+
+	.admin-bar & {
+		height: calc(var(--height) - var(--header-height) - var(--wp-admin--admin-bar--height));
+	}
+
+	transition: all 0.3s;
+	transform: translateY(-20%);
+	opacity: 0;
+	pointer-events: none;
+	visibility: hidden;
+
+	@include media($tablet) {
+		transform: translateY(100%);
+
+		position: fixed;
+		left: 0;
+		bottom: var(--bottom-menu-height);
+		width: 90%;
+		--height: 98dvh !important;
+		height: calc(var(--height) - var(--header-height) - var(--bottom-menu-height));
+
+		.admin-bar & {
+			height: calc(
+				var(--height) - var(--header-height) - var(--wp-admin--admin-bar--height) - var(--bottom-menu-height)
+			);
+		}
+
+		.open-mobile-catalog-menu  & {
+			opacity: 1;
+			visibility: visible;
+			pointer-events: initial;
+			transform: translateY(0%);
+		}
+	}
+
+	.open-catalog-menu & {
+		transform: translateY(100%);
+		pointer-events: initial;
+		visibility: visible;
+		opacity: 1;
+	}
+
+	@include media($laptop) {
+		--height: 90dvh;
+	}
+
+	&__list {
+		@include reset-list;
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+		gap: adapt(44, 24, $tablet) adapt(72, 24, $tablet);
+	}
+
+	&__item {
+	}
+
+	&__link {
+		text-decoration: none;
+		color: inherit;
+		@include flex-column;
+		gap: 10px;
+
+		@include media($tablet) {
+			flex-direction: row;
+			align-items: center;
+			position: relative;
+
+			&::after {
+				content: '';
+				width: 7px;
+				height: 14px;
+				background-image: url('../../../public/images/icons/catalog-arrow.svg');
+				background-position: center center; /* x y */
+				background-size: contain;
+				background-repeat: no-repeat;
+				flex-shrink: 0;
+			}
+		}
+	}
+
+	&__text {
+		font-weight: 500;
+	}
+
+	&__quantity {
+		font-size: 14px;
+		color: var(--color-gray-3);
+		@include media($tablet) {
+			margin-left: auto;
+			flex-shrink: 0;
+		}
+	}
+
+	&__shop-link {
+		display: flex;
+		align-items: center;
+		margin-top: 24px;
+		padding-top: 24px;
+		border-top: 1px solid var(--color-stroke);
+		gap: 8px;
+		text-decoration: none;
+		color: var(--color-blue);
+		transition: all 0.3s;
+
+		@include hover {
+			color: var(--color-blue-hover);
+		}
+	}
+}

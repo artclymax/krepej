@@ -1,0 +1,272 @@
+@use "../tools" as *;
+.form-field-hidden,
+.form-field--hidden {
+	display: none;
+}
+
+.form-wrapper {
+	display: grid;
+	gap: 20px;
+	align-items: start;
+	grid-template-columns: 1fr;
+	align-items: flex-end;
+
+	.wpcf7-spinner {
+		@include reset;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+	}
+
+	input[type="submit"],
+	input[type="button"] {
+		text-wrap: wrap;
+	}
+
+	& > p {
+		@include reset;
+	}
+}
+.form-wrapper-grid-2 {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	@include media($tablet) {
+		grid-template-columns: 1fr;
+	}
+}
+
+//.form-wrapper-grid {
+//	display: grid;
+//	grid-template-columns: 1fr 1fr;
+//	@include media($mobile) {
+//		grid-template-columns: 1fr;
+//	}
+//	.form-field--btn {
+//		@include media($mobile, min) {
+//			justify-self: start;
+//		}
+//		.btn {
+//			justify-content: center;
+//		}
+//	}
+//}
+
+.form-reset-btn {
+	@include reset-btn;
+	width: initial;
+}
+.form-field-full {
+	grid-column: 1 / -1;
+}
+.form-field > p {
+	@include reset;
+	@include flex-column;
+	gap: 8px;
+}
+.form-field--acceptance {
+	//grid-column: 1 / -1;
+
+	//@include media($laptop-sm, min) {
+	//	order: 4;
+	//}
+}
+.form-btn {
+	max-width: 100%;
+}
+.form-input {
+	font-size: 14px;
+	border: 1px solid var(--color-gray-border);
+	padding: 14px;
+
+	width: 100%;
+	transition: all 0.3s ease-in-out;
+	background: var(--color-white);
+
+	&::placeholder {
+		opacity: 0.7;
+	}
+
+	@include focus {
+		border-color: var(--color-accent);
+	}
+
+	&.wpcf7-not-valid {
+		border-color: red;
+	}
+}
+.form-textarea {
+	field-sizing: content;
+	resize: none;
+	min-height: 3lh;
+	max-height: 10lh;
+}
+.form-textarea-2 {
+	resize: none;
+	height: 120px;
+}
+//.form-btn {
+//	flex-shrink: 0;
+//	justify-self: start;
+//	@include media($mobile) {
+//	}
+//	.form-wrapper-grid & {
+//		order: -1;
+//	}
+//}
+// VALID-TIP
+.wpcf7-form-control-wrap {
+	position: relative;
+}
+.wpcf7-not-valid-tip {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	transform: translateY(100%);
+	font-size: adapt(14, 12);
+}
+
+// ACCEPTANCE
+.wpcf7-acceptance {
+	* {
+		@include reset;
+	}
+
+	input {
+		display: none;
+	}
+	input:checked ~ .wpcf7-list-item-label {
+		.form-checkbox-icon {
+			background-color: var(--color-accent);
+			border-color: var(--color-accent);
+			&::before {
+				opacity: 1;
+			}
+		}
+	}
+	.wpcf7-list-item-label {
+		&::before,
+		&::after {
+			display: none;
+		}
+		display: flex;
+		align-items: center;
+		gap: 10px;
+	}
+
+	.form-checkbox-icon {
+		flex-shrink: 0;
+		@include flex-center;
+		@include square(16px);
+		border: 1px solid var(--color-gray-border);
+		//border-radius: 2px;
+		background-color: var(--color-0);
+		overflow: hidden;
+
+		&::before {
+			content: "";
+			@include square(100%);
+			@include bgimg(url("../../../public/images/icons/check-icon.svg"));
+			transition: all 0.3s;
+			opacity: 0;
+		}
+	}
+
+	.form-checkbox-text {
+		font-size: 14px;
+		color: var(--color-gray-second);
+
+		a {
+			//text-decoration: none;
+			color: inherit;
+			transition: all 0.3s;
+			@include hover {
+				color: var(--color-accent-hover);
+			}
+		}
+	}
+}
+
+//! CUSTOM FILE BTN
+.form-field--file {
+	p {
+		align-items: start;
+	}
+}
+.form-file {
+	display: none;
+}
+.file-label {
+	--icon-bg: url("../../../public/images/icons/file-icon.svg");
+	border: 1px solid var(--color-accent);
+	box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.06);
+	padding: 10px 18px;
+	display: inline-flex;
+	gap: 8px;
+	justify-content: center;
+	align-items: center;
+	color: var(--color-accent);
+	transition: all 0.3s;
+	font-weight: 500;
+	&::after {
+		content: "";
+		flex-shrink: 0;
+		display: inline-flex;
+		@include square(24px);
+		@include bgimg(var(--icon-bg));
+	}
+	&__text {
+		display: none;
+		//@include flex-column;
+		//gap: 4px;
+		//p {
+		//	@include reset;
+		//	@include flex-column;
+		//	gap: 4px;
+		//}
+
+		//span {
+		//}
+
+		//.title-font {
+		//}
+
+		//.second-file-info {
+		//	font-size: 14px;
+		//	color: var(--color-gray-3);
+		//}
+	}
+
+	@include hover {
+		--icon-bg: url("../../../public/images/icons/file-icon--white.svg");
+		background: var(--color-accent);
+		color: var(--color-white);
+	}
+}
+.file-text {
+	//display: none;
+}
+.form-file-hint {
+	font-size: 14px;
+}
+
+.form-wrapper--grid {
+	@include media($tablet, min) {
+		gap: 20px 10px;
+		grid-template-columns: 1fr 1fr 1fr;
+	}
+
+	.form-field--btn {
+		@include media($tablet, min) {
+			grid-column: 3;
+			grid-row: 1;
+			justify-self: end;
+
+			.btn {
+				padding-inline: 14px;
+			}
+		}
+	}
+}
+
+//!=== PAGES ==================

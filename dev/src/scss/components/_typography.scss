@@ -1,0 +1,33 @@
+@use "../tools" as *;
+
+.upcase {
+	text-transform: uppercase;
+}
+.t-center {
+	text-align: center !important;
+}
+
+.title-1 {
+	@include title-1;
+}
+.title-2 {
+	@include title-2;
+}
+.title-product-2{
+	@include title-product-2;
+}
+.title-3 {
+	@include title-3;
+}
+
+.section-content {
+	h1 {
+		@extend .title-1;
+	}
+	h2 {
+		@extend .title-2;
+	}
+	h3 {
+		@extend .title-3;
+	}
+}

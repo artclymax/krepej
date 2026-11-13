@@ -1,0 +1,99 @@
+@use "constants" as *;
+@use "sass:math";
+
+@function sum($num1, $num2) {
+	@return $num1 + $num2;
+}
+
+@function container-padding($containerWidth: var(--container-width), $containerPadding: var(--container-padding)) {
+	@return #{max($containerPadding, calc((100% - $containerWidth) / 2))};
+}
+
+// url from var
+@function url-var($var) {
+	@return #{'url("'} + $var + #{'")'};
+}
+
+// PERCENTAGE LINE-HEIGHT
+@function lh($line-height, $font-size) {
+	@return calc($line-height / $font-size * 100%);
+}
+
+// FROM PX TO REM
+@function rem($pixel) {
+	@if math.is-unitless($pixel) {
+		@return math.div($pixel, 16) + rem;
+	} @else {
+		@error 'Не используйте единицы измерения при работе с функцией rem()! Передавайте аргументом только числа.';
+	}
+}
+
+@function remPx($px) {
+	@return calc(($px / 16px) * 1rem);
+}
+// FROM PX TO EM
+@function em($px) {
+	@return calc($px / 16) + em;
+}
+
+// ADAPTIVE IMAGE HEIGHT CALCULATOR
+@function percent($width, $height) {
+	@return calc($height / $width * 100%);
+}
+// PERCENTAGE LINE-HEIGHT
+@function lh($line-height, $font-size) {
+	@return calc($line-height / $font-size * 100%);
+}
+
+// FROM PX TO REM
+@function rem($px) {
+	@return calc($px / 16) + rem;
+}
+
+@function remPx($px) {
+	@return calc(($px / 16px) * 1rem);
+}
+// FROM PX TO EM
+@function em($px) {
+	@return calc($px / 16) + em;
+}
+
+// ADAPTIVE IMAGE HEIGHT CALCULATOR
+@function percent($width, $height) {
+	@return calc($height / $width * 100%);
+}
+// image-set for background
+@function imgset($url, $format: "jpg", $count: 3, $mainDir: "../images/") {
+	$result: 'image-set(url("#{$mainDir}#{$url}.#{$format}") type("image/#{$format}") 1x';
+
+	//$i: 1;
+	@for $i from 1 to $count {
+		$result: $result + ', url("#{$mainDir}#{$url}@#{$i + 1}x.#{$format}") type("image/#{$format}") #{$i + 1}x';
+	}
+	@return #{$result + ")"};
+}
+
+// Адаптивное свойство (clamp)
+// - https://min-max-calculator.9elements.com/
+// - $maxSize = максимальный размер (как по макету)
+// - $minSize = до какого уменьшать (размер по финальному брейкпоинту)
+// - $units = единица измерения ('' ==> по умолчанию в px / 'rem')
+// - $fromScreen = ширина полотна макета
+// - $toScreen = финальный размер брейкпоинта
+//! - clamp не работает с отрицательными или 0 значениями, поэтому нельзя использовать для отрицательного margin
+@function adapt($maxSize, $minSize, $toScreen: $finishBreakpoint, $fromScreen: $templateWidth, $units: $unitsDefault) {
+	$slope: calc(($maxSize - $minSize) / ($fromScreen - $toScreen));
+	$yIntersection: calc((-1 * $toScreen) * $slope + $minSize);
+
+	@if ($yIntersection==0) {
+		$yIntersection: 0.000001;
+	}
+
+	@if ($units== "rem") {
+		$flyValue: #{$yIntersection}rem " + " #{$slope * 100}vw;
+		@return #{"clamp(" #{$minSize}rem "," $flyValue "," #{$maxSize}rem ")"};
+	} @else {
+		$flyValue: #{rem($yIntersection)}" + " #{$slope * 100}vw;
+		@return #{"clamp(" rem($minSize) "," $flyValue "," rem($maxSize) ")"};
+	}
+}

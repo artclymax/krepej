@@ -1,0 +1,1125 @@
+@use "sass:math";
+@use "constants" as *;
+@use "functions" as *;
+
+// HOVER NOT FOR SENSOR
+@mixin hover($hasActiveEffectOnMobile: true) {
+	@media (any-hover: hover) {
+		&:hover {
+			@content;
+		}
+	}
+
+	@if ($hasActiveEffectOnMobile) {
+		@media (any-hover: none) {
+			&:active {
+				@content;
+			}
+		}
+	}
+}
+//  break word mixin
+@mixin break-word {
+	// чтобы очень длинные слова переносились
+	& {
+		overflow-wrap: break-word;
+		word-wrap: break-word;
+		word-break: break-all;
+		word-break: break-word;
+		hyphens: auto;
+	}
+}
+
+@mixin hoverSlideBgText($color, $hoverColor, $position: 100%, $transition: background 0.3s) {
+	background-image: linear-gradient(to right, $hoverColor, $hoverColor 50%, $color 50%);
+	background-size: 200% 100%;
+	background-position: $position;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	transition: $transition;
+
+	@media (any-hover: hover) {
+		&:hover {
+			background-position: 0;
+		}
+	}
+}
+
+@mixin hoverSlideBg($color, $hoverColor, $transition: all 0.3s, $position: 100%, $textColor: $color) {
+	background-image: linear-gradient(to right, $hoverColor, $hoverColor 50%, $color 50%);
+	background-size: calc(200% + 4px) calc(100% + 4px);
+	background-position: $position;
+	transition: $transition;
+
+	@media (any-hover: hover) {
+		&:hover {
+			background-position: 0;
+			color: $textColor;
+		}
+	}
+}
+
+@mixin hoverLine(
+	$mode: slide,
+	$hoverColor: var(--color-accent),
+	$height: 0.1em,
+	$paddingBottom: $height,
+	$transition: 0.3s,
+	$bd-r: 0
+) {
+	position: relative;
+	padding-block: $paddingBottom;
+	margin-block: -#{$paddingBottom};
+	overflow: hidden;
+	//margin-bottom: -$paddingBottom;
+
+	&::after {
+		content: "";
+		position: absolute;
+		bottom: 0;
+		opacity: 0;
+
+		@if ($mode == slide) {
+			width: 0;
+		}
+		@if ($mode == center) {
+			left: 50%;
+			right: 50%;
+		}
+		@if ($mode == up) {
+			left: 0;
+			right: 0;
+			transform: translateY(-10px);
+		}
+		height: $height;
+		background: $hoverColor;
+		border-radius: $bd-r;
+		transition: all $transition;
+	}
+
+	@include hover {
+		@content;
+		&::after {
+			opacity: 1;
+			@if ($mode == slide) {
+				width: 100%;
+			}
+			@if ($mode == center) {
+				left: 0;
+				right: 0;
+			}
+			@if ($mode == up) {
+				transform: translateY(0);
+			}
+		}
+	}
+}
+
+// triangle
+// https://htmlbook.ru/blog/treugolniki-cherez-css
+@mixin triangle($size: 100px, $color: orangered, $type: "top") {
+	@if ($type == "top") {
+		border: $size solid transparent;
+		border-top: $size solid $color;
+	}
+
+	@if ($type == "right") {
+		border: $size solid transparent;
+		border-right: $size solid $color;
+	}
+
+	@if ($type == "bottom") {
+		border: $size solid transparent;
+		border-bottom: $size solid $color;
+	}
+
+	@if ($type == "left") {
+		border: $size solid transparent;
+		border-left: $size solid $color;
+	}
+
+	@if ($type == "top-right") {
+		border: $size solid transparent;
+		border-top: $size solid $color;
+		border-right: $size solid $color;
+	}
+
+	@if ($type == "bottom-right") {
+		border: $size solid transparent;
+		border-right: $size solid $color;
+		border-bottom: $size solid $color;
+	}
+
+	@if ($type == "bottom-left") {
+		border: $size solid transparent;
+		border-bottom: $size solid $color;
+		border-left: $size solid $color;
+	}
+
+	@if ($type == "top-left") {
+		border: $size solid transparent;
+		border-left: $size solid $color;
+		border-top: $size solid $color;
+	}
+}
+
+@mixin counter($hasZero: true, $selector: "& > *", $textBefore: "", $textAfter: "") {
+	counter-reset: order;
+
+	@if ($hasZero == true) {
+		#{$selector}::before {
+			counter-increment: order;
+			content: $textBefore "0" counter(order) $textAfter;
+		}
+
+		// убираем ведущий 0 начиная с 10
+		#{$selector}:nth-child(n + 10)::before {
+			content: $textBefore counter(order) $textAfter;
+		}
+	} @else {
+		#{$selector}::before {
+			counter-increment: order;
+			content: $textBefore counter(order) $textAfter;
+		}
+	}
+}
+
+// FONT-FACE MIXIN
+@mixin font-face($font-family, $file-path, $weight: 400, $style: normal) {
+	@font-face {
+		font-family: $font-family;
+		font-weight: $weight;
+		font-style: $style;
+		font-display: swap;
+		src: url("#{$file-path}.eot");
+		src:
+			url("#{$file-path}.eot?#iefix") format("embedded-opentype"),
+			url("#{$file-path}.woff2") format("woff2"),
+			url("#{$file-path}.woff") format("woff"),
+			url("#{$file-path}.ttf") format("truetype");
+	}
+}
+@mixin reset {
+	padding: 0;
+	margin: 0;
+}
+
+@mixin reset-child {
+	& > *:first-child {
+		padding-top: unset;
+		margin-top: unset;
+	}
+	& > *:last-child {
+		padding-bottom: unset;
+		margin-bottom: unset;
+	}
+}
+
+@mixin animationFix {
+	backface-visibility: hidden;
+}
+
+//@mixin bgimg($imgPosition: center, $imgFit: cover, $height: 100%, $width: 100%) {
+//	img,
+//	video,
+//	picture,
+//	source {
+//		position: absolute;
+//		top: 0;
+//		left: 0;
+//		width: $width;
+//		height: $height;
+//		object-fit: $imgFit;
+//		object-position: $imgPosition;
+//	}
+//}
+
+@mixin bgimg($url, $size: contain, $position: center) {
+	background-image: $url;
+	background-position: $position;
+	background-size: $size;
+	background-repeat: no-repeat;
+	@content;
+}
+
+@mixin bgColorImg($color, $img, $position: center, $size: cover, $repeat: no-repeat) {
+	background: $color $img $position / $size $repeat;
+}
+
+@function lsFromPercentToEm($percent) {
+	@return calc($percent / 100) + em;
+}
+
+@mixin retinaBg($url, $format: "jpg", $count: 3, $mainDir: "../images/") {
+	$result: 'image-set(url("#{$mainDir}#{$url}.#{$format}") type("image/#{$format}") 1x';
+
+	//$i: 1;
+	@for $i from 1 to $count {
+		$result: $result + ', url("#{$mainDir}#{$url}@#{$i + 1}x.#{$format}") type("image/#{$format}") #{$i + 1}x';
+	}
+
+	background-image: #{$result + ")"};
+}
+
+@mixin createOverlay($color, $pseudoEl: before, $z_index: 2) {
+	&::#{$pseudoEl} {
+		content: "";
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		z-index: $z_index;
+		background: $color;
+		@content;
+	}
+}
+
+@mixin autoValue($property, $startValue, $endValue, $endWidth: $finishBreakpoint, $startWidth: $templateWidth) {
+	@if ($startWidth != $templateWidth) {
+		@media (max-width: em($startWidth)) {
+			#{$property}: $startValue;
+		}
+	} @else {
+		#{$property}: $startValue;
+	}
+	@media (max-width: em($endWidth)) {
+		#{$property}: $endValue;
+	}
+}
+
+// Visibility
+@mixin hide {
+	opacity: 0;
+	visibility: hidden;
+}
+
+@mixin show {
+	opacity: 1;
+	visibility: visible;
+}
+
+@mixin visually-hidden {
+	position: absolute !important;
+	width: 1px !important;
+	height: 1px !important;
+	margin: -1px !important;
+	border: 0 !important;
+	padding: 0 !important;
+	white-space: nowrap !important;
+	clip-path: inset(100%) !important;
+	clip: rect(0 0 0 0) !important;
+	overflow: hidden !important;
+}
+
+// Flex
+@mixin flex-center($isInline: false) {
+	@if $isInline {
+		display: inline-flex;
+	} @else {
+		display: flex;
+	}
+
+	justify-content: center;
+	align-items: center;
+}
+
+// ABS
+@mixin abs($y: top, $x: left) {
+	position: absolute;
+	#{$y}: 0;
+	#{$x}: 0;
+}
+@mixin abs-center {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	translate: -50% -50%;
+}
+
+@mixin abs-x {
+	position: absolute;
+	left: 50%;
+	translate: -50%;
+}
+
+@mixin abs-y {
+	position: absolute;
+	top: 50%;
+	translate: 0 -50%;
+}
+
+@mixin abs-cover {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+
+@mixin square($size) {
+	width: $size;
+	height: $size;
+}
+
+@mixin full-vw-centered-line($property: top, $left: 50%, $right: auto, $translate: -50%, $width: 100vw) {
+	position: relative;
+
+	&::before {
+		content: "";
+		position: absolute;
+		left: $left;
+		right: $right;
+		#{$property}: 0;
+		translate: $translate;
+		width: $width;
+		height: rem(1);
+		background-color: var(--color-border);
+	}
+}
+
+@mixin line-after-container(
+	$height: 2px,
+	$color: var(--color-accent),
+	$property: bottom,
+	$translateY: -50%,
+	$left: 0,
+	$right: auto,
+	$containerWidth: var(--container-width),
+	$containerPadding: var(--container-padding),
+	$parentPosition: relative,
+	$pseudoEl: before
+) {
+	$width: max($containerPadding, calc((100vw - $containerWidth) / 2));
+	$translateX: -100%;
+	@if $right == 0 {
+		$translateX: 100%;
+	}
+	position: $parentPosition;
+
+	&::#{$pseudoEl} {
+		content: "";
+		position: absolute;
+		width: $width;
+		height: $height;
+		left: $left;
+		right: $right;
+		#{$property}: 0;
+		background: $color;
+		transform: translate($translateX, $translateY);
+	}
+}
+
+@mixin media($screen, $width: max) {
+	@media (#{$width}-width: em($screen)) {
+		@content;
+	}
+}
+
+@mixin focus {
+	@supports selector(:focus-visible) {
+		&:focus {
+			outline: none;
+		}
+		&:focus-visible {
+			@content;
+		}
+	}
+}
+
+@mixin uncontainer(
+	$width: 50%,
+	$gapRow: 30px,
+	$gapCol: $gapRow,
+	$wrap: false,
+	$containerWidth: var(--container-width),
+	$containerPadding: var(--container-padding)
+) {
+	display: flex;
+	gap: $gapCol $gapRow;
+
+	@if $wrap {
+		flex-wrap: wrap;
+	}
+	@if $width == 100% {
+		padding-left: unset;
+		& > *:first-child,
+		& > *:last-child {
+			flex: 1 1 100%;
+		}
+	} @else {
+		padding-left: max($containerPadding, calc((100% - $containerWidth) / 2));
+		& > *:first-child {
+			flex: 0 0 $width;
+			max-width: $width; //! для swiper
+		}
+
+		& > *:last-child {
+			flex: 0 1 calc(100% - $width - $gapRow);
+			max-width: calc(100% - $width - $gapRow); //! для swiper
+		}
+	}
+}
+
+@mixin circleHover(
+	$color: var(--color-accent),
+	$positionStart: 100%,
+	$positionEnd: 0,
+	$translate: Y,
+	$el: after,
+	$duration: var(--duration-medium)
+) {
+	overflow: hidden;
+
+	&::#{$el} {
+		content: "";
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background: $color;
+		border-radius: 50%;
+
+		transform: translate#{$translate }($positionStart);
+		transition: transform $duration;
+	}
+
+	@include hover {
+		&::#{$el} {
+			transform: translate#{$translate }($positionEnd);
+		}
+	}
+}
+
+@mixin custom-scroll($color, $bg, $width: auto) {
+	scrollbar-color: $color $bg;
+	scrollbar-width: $width;
+}
+
+@mixin floating-label($inputSelector: "input", $labelSelector: "label", $hasPlaceholder: true) {
+	@if $hasPlaceholder {
+		#{$inputSelector}:focus ~ #{$labelSelector},
+		#{$inputSelector}:not(:placeholder-shown) ~ #{$labelSelector},
+		#{$inputSelector}[required]:valid ~ #{$labelSelector},
+		#{$inputSelector}.has-value ~ #{$labelSelector} {
+			@content;
+		}
+
+		#{$inputSelector}::placeholder {
+			opacity: 0;
+			transition: opacity 0.3s;
+		}
+
+		#{$inputSelector}:focus {
+			&::placeholder {
+				opacity: 1;
+			}
+		}
+	} @else {
+		// При фокусе или если input заполнен без placeholder
+		#{$inputSelector}:focus ~ #{$labelSelector},
+		#{$inputSelector}[required]:valid ~ #{$labelSelector},
+		#{$inputSelector}.has-value ~ #{$labelSelector} {
+			@content;
+		}
+	}
+}
+
+@mixin tip($pos: "bottom-center", $offset: 2px, $pseudo-el: after, $attr: "aria-label") {
+	// bottom / top / left / right;
+
+	@include hover {
+		&::#{$pseudo-el} {
+			opacity: 1;
+			visibility: visible;
+		}
+	}
+	&::#{$pseudo-el} {
+		content: attr(#{$attr});
+
+		@if ($pos == left) {
+			top: 0;
+			left: -$offset;
+			transform: translate(-100%, -0.1em);
+		} @else if ($pos == "left-center") {
+			top: 50%;
+			left: -$offset;
+			transform: translate(-100%, -50%);
+		} @else if ($pos == right) {
+			top: 0;
+			right: -$offset;
+			transform: translate(100%, -0.1em);
+		} @else if ($pos == "right-center") {
+			top: 50%;
+			right: -$offset;
+			transform: translate(100%, -50%);
+		} @else if ($pos == bottom) {
+			bottom: -$offset;
+			left: 0;
+			transform: translate(0, 100%);
+		} @else if ($pos == "bottom-center") {
+			bottom: -$offset;
+			left: 50%;
+			transform: translate(-50%, 100%);
+		} @else if ($pos == top) {
+			top: -$offset;
+			left: 0;
+			transform: translate(0, -100%);
+		} @else {
+			top: -$offset;
+			left: 50%;
+			transform: translate(-50%, -100%);
+		}
+
+		position: absolute;
+		z-index: 2;
+		width: max-content;
+		background: var(--color-gray);
+		padding: rem(8);
+		border-radius: 4px;
+
+		color: var(--color-light);
+		line-height: 100%;
+		font-size: rem(14);
+		font-weight: 400;
+		opacity: 0;
+		visibility: hidden;
+		transition: all var(--duration-fast);
+	}
+}
+// убирает стрелки у input[type="number"]
+@mixin delete-arrows-input-number {
+	/* Chrome, Safari, Edge, Opera */
+	input::-webkit-outer-spin-button,
+	input::-webkit-inner-spin-button {
+		-webkit-appearance: none;
+		margin: 0;
+	}
+	/* Firefox */
+	input[type="number"] {
+		-moz-appearance: textfield;
+	}
+}
+
+@mixin gradient-text($color: linear-gradient(red, green)) {
+	background: $color;
+	background-clip: text;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+@mixin decor-ball($top: 0, $left: 0, $size: big, $pseudo: after) {
+	$blur: 0;
+	$blur-mobile: $blur;
+
+	@if ($size== big) {
+		$size: adapt(300, 180);
+		$blur: 150px;
+		$blur-mobile: 130px;
+	} @else {
+		$size: adapt(200, 140);
+		$blur: 110px;
+		$blur-mobile: 100px;
+	}
+
+	&::#{$pseudo} {
+		content: "";
+		position: absolute;
+		top: $top;
+		left: $left;
+		@include square($size);
+		border-radius: 100%;
+		background: var(--gradient);
+		filter: blur($blur);
+		z-index: 1;
+
+		@include media($mobile-l) {
+			filter: blur($blur-mobile);
+		}
+	}
+	& > * {
+		position: relative;
+		z-index: 2;
+	}
+}
+
+@mixin img-obj($obj-fit: cover, $obj-pos: center) {
+	img,
+	source,
+	picture,
+	video {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		object-fit: $obj-fit;
+		object-position: $obj-pos;
+	}
+}
+
+//===============
+@mixin custom-select-styles {
+	.custom-select {
+		border: none;
+		border-radius: 0;
+		flex-shrink: 0;
+		&__select-field,
+		&__btn {
+			background: transparent;
+			color: var(--color-dark);
+			font-weight: 400;
+			font-size: 14px;
+			text-transform: none;
+			border: none;
+			padding: 10px;
+			text-align: left;
+
+			@include hover {
+				background: transparent;
+			}
+		}
+
+		&__select-field {
+			border-top-left-radius: 0;
+			border-bottom-left-radius: 0;
+		}
+
+		&__btn {
+			transition: all 0.3s;
+
+			@include hover {
+				color: var(--color-accent);
+			}
+		}
+	}
+}
+
+// mobile-menu
+
+@mixin mobile-header($bg: var(--color-dark)) {
+	//position: relative;
+	//z-index: 55;
+
+	//& > * {
+	//	& > *:not(.header-menu),
+	//	& > *:not(.header__phone-box) {
+	//		position: relative;
+	//		z-index: 2;
+	//	}
+	//}
+	@include media($tablet) {
+		&::after {
+			content: "";
+			background: $bg;
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			z-index: 2;
+			@content;
+		}
+	}
+}
+@mixin mobile-menu2($bg: var(--color-light), $active: ".open-header-menu", $list: "ul", $media: $tablet) {
+	@include media($media) {
+		--height: var(--header-height);
+		position: fixed !important;
+		z-index: 2 !important;
+		top: var(--height);
+		left: 0;
+		width: 100%;
+		padding: 25px 10px 60px;
+		height: calc(100dvh - var(--height));
+		background: $bg;
+		color: inherit;
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+		overflow: auto;
+		transform: translateY(-100%);
+		pointer-events: none;
+		visibility: hidden;
+		transition: all 0.3s;
+		@content;
+
+		.admin-bar & {
+			--height: calc(var(--header-height) + var(--wp-admin--admin-bar--height) - 1px);
+		}
+
+		#{$active} & {
+			transform: translateY(0);
+			pointer-events: all;
+			visibility: visible;
+		}
+		#{$list} {
+			display: flex;
+			flex-direction: column;
+			flex-wrap: wrap;
+			text-align: center;
+			align-items: center;
+			width: 100%;
+		}
+	}
+}
+
+@mixin mobile-menu($bg: var(--color-light), $active: ".open-header-menu", $list: "ul", $media: $tablet) {
+	@include media($media) {
+		--menu-top-offset: calc(var(--header-height));
+
+		position: fixed;
+		z-index: 2;
+		top: var(--menu-top-offset);
+		left: 10px;
+		right: 10px;
+		width: unset; // Чтобы работали left и right
+
+		// Вычисляем максимальную высоту: 100dvh минус отступ сверху и минус 20px зазора снизу экрана
+		height: max-content;
+		max-height: calc(100dvh - var(--menu-top-offset));
+
+		padding: 0; // Паддинги уходят в wrapper
+		background: $bg;
+
+		display: flex;
+		flex-direction: column;
+
+		transform: translateY(-100%);
+		opacity: 0;
+		pointer-events: none;
+		visibility: hidden;
+		transition: all 0.3s;
+
+		@content;
+
+		.admin-bar & {
+			--menu-top-offset: calc(var(--header-height) + var(--wp-admin--admin-bar--height));
+		}
+
+		#{$active} & {
+			transform: translateY(0);
+			opacity: 1;
+			pointer-events: auto;
+			visibility: visible;
+			overflow-y: auto;
+
+			transition:
+				transform 0.3s ease,
+				opacity 0.3s ease,
+				visibility 0s;
+		}
+
+		#{$list} {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			width: 100%;
+		}
+	}
+}
+
+@mixin mobile-shop-menu($bg: var(--color-light), $active: ".open-header-menu", $list: "ul", $media: $tablet) {
+	@include media($media) {
+		--height: var(--bottom-menu-height);
+
+		position: fixed;
+		//z-index: 100;
+		//top: var(--height);
+		bottom: var(--bottom-menu-height);
+		right: 0;
+
+		width: 70%;
+		height: max-content; /* Берет высоту содержимого */
+		max-height: calc(100dvh - var(--height)); /* Ограничивает меню до конца экрана */
+
+		padding: 20px;
+		background: $bg;
+
+		transform: translateY(100%);
+		opacity: 0;
+		pointer-events: none;
+		visibility: hidden;
+
+		transition: all 0.3s;
+
+		@content;
+
+		.admin-bar & {
+			--height: calc(var(--header-height) + var(--wp-admin--admin-bar--height));
+		}
+
+		#{$active} & {
+			transform: translateY(0);
+			opacity: 1;
+			pointer-events: auto;
+			visibility: visible;
+			overflow: auto;
+
+			transition:
+				transform 0.3s ease,
+				opacity 0.3s ease,
+				visibility 0s;
+		}
+
+		#{$list} {
+			display: flex;
+			flex-direction: column;
+			//align-items: center;
+			align-items: flex-start;
+			width: 100%;
+		}
+	}
+}
+
+@mixin liquid-glass {
+	background: rgba(0, 0, 0, 0.2); /* почти прозрачное “молоко” */
+	border: 1px solid rgba(255, 255, 255, 0.25);
+	box-shadow:
+		inset 0 0 10px rgba(255, 255, 255, 0.2),
+		/* внутреннее свечение */ 0 4px 20px rgba(0, 0, 0, 0.25); /* внешняя тень */
+	backdrop-filter: blur(30px) saturate(180%);
+	-webkit-backdrop-filter: blur(30px) saturate(180%);
+}
+
+@mixin overlay($bg: #1c1c1e, $opacity: 0.4) {
+	&::before {
+		content: "";
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background: $bg;
+		opacity: $opacity;
+		z-index: 1;
+		@content;
+	}
+}
+
+@mixin flx($column: 3, $gap: 24px, $min: 200px, $grow: 0, $shrink: 1) {
+	$width: calc((100% - $gap * ($column - 1)) / $column);
+
+	display: flex;
+	flex-wrap: wrap;
+	column-gap: $gap;
+
+	& > * {
+		min-width: $min; // минимальная ширина, чтобы работало, как в grid minmax
+		flex: $grow $shrink $width;
+	}
+}
+
+@mixin transition($props: all, $time: 0.3s, $ease: ease) {
+	transition: $props $time $ease;
+}
+
+@mixin flex($align: center, $justify: center, $gap: null) {
+	display: flex;
+	align-items: $align;
+	justify-content: $justify;
+
+	@if $gap != null {
+		gap: $gap;
+	}
+}
+
+@mixin flex-column {
+	display: flex;
+	flex-direction: column;
+}
+
+@mixin grid-auto($min: 200px, $gap: 24px) {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax($min, 1fr));
+	gap: $gap;
+}
+
+@mixin truncate($lines: 1) {
+	overflow: hidden;
+
+	@if $lines == 1 {
+		white-space: nowrap;
+		text-overflow: ellipsis;
+	} @else {
+		display: -webkit-box;
+		-webkit-line-clamp: $lines;
+		-webkit-box-orient: vertical;
+	}
+}
+
+@mixin abs-center {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+@mixin reset-link {
+	text-decoration: none;
+	color: inherit;
+	display: inline-flex;
+}
+
+@mixin reset-list {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+@mixin reset-btn {
+	background: none;
+	border: none;
+	padding: 0;
+	font: inherit;
+	color: inherit;
+	width: 100%;
+	text-align: left;
+}
+
+// current
+@mixin hover-link($color: currentColor) {
+	text-decoration: none;
+	color: inherit;
+	display: inline-flex;
+	//@include hoverLine(up, currentColor, 2px);
+	transition: all 0.3s;
+	@content;
+	@include hover {
+		color: $color;
+		//opacity: 0.7;
+		//color: var(--color-blue-hover);
+	}
+	//@include hoverSlideBgText(var(--main-text), var(--btn-primary));
+}
+
+@mixin hover-icon {
+	transition: all 0.3s;
+	@include hover {
+		//transform: scale(1.1);
+		transform: translateY(-2px);
+	}
+}
+
+@mixin absolute-link($el: "after") {
+	&::#{$el} {
+		content: "";
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+	}
+}
+
+@mixin image-abs {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+
+@mixin cut-border(
+	$chamfer-x: 10px,
+	// Горизонтальный размер скоса
+	$chamfer-y: 9px,
+	// Вертикальный размер скоса
+	$border-width: 1px,
+	// Толщина рамки
+	$border-color: rgba(225, 195, 64, 0.4),
+	// Цвет рамки
+	$bg-color: #ffffff // Цвет фона внутри рамки
+) {
+	position: relative;
+
+	// Общие стили для псевдоэлементов
+	&::before,
+	&::after {
+		content: "";
+		position: absolute;
+		inset: 0;
+		pointer-events: none; // Чтобы клики проходили сквозь рамку
+	}
+
+	// Внешний слой: цветная форма
+	&::before {
+		background: $border-color;
+		z-index: 1;
+		clip-path: polygon(
+			#{$chamfer-x} 0,
+			calc(100% - #{$chamfer-x}) 0,
+			100% #{$chamfer-y},
+			100% calc(100% - #{$chamfer-y}),
+			calc(100% - #{$chamfer-x}) 100%,
+			#{$chamfer-x} 100%,
+			0 calc(100% - #{$chamfer-y}),
+			0 #{$chamfer-y}
+		);
+	}
+
+	// Внутренний слой: "вырез" фона
+	&::after {
+		background: $bg-color;
+		z-index: 2;
+		// Координаты смещены на $border-width внутрь
+		clip-path: polygon(
+			calc(#{$chamfer-x} + #{$border-width}) #{$border-width},
+			calc(100% - #{$chamfer-x} - #{$border-width}) #{$border-width},
+			calc(100% - #{$border-width}) calc(#{$chamfer-y} + #{$border-width}),
+			calc(100% - #{$border-width}) calc(100% - #{$chamfer-y} - #{$border-width}),
+			calc(100% - #{$chamfer-x} - #{$border-width}) calc(100% - #{$border-width}),
+			calc(#{$chamfer-x} + #{$border-width}) calc(100% - #{$border-width}),
+			#{$border-width} calc(100% - #{$chamfer-y} - #{$border-width}),
+			#{$border-width} calc(#{$chamfer-y} + #{$border-width})
+		);
+	}
+
+	// Контент всегда поверх рамки
+	> * {
+		position: relative;
+		z-index: 3;
+	}
+}
+
+@mixin card-box {
+	padding: adapt(20, 10, $tablet);
+	box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.25);
+	background: #f7f7f7;
+}
+
+/**
+ * Миксин для добавления иконки через псевдоэлемент (::before или ::after)
+ * 
+ * @param {String} $url - Путь к изображению (например, url(".../icon.svg"))
+ * @param {String} $pseudo [before] - Псевдоэлемент: "before" или "after"
+ * @param {Length} $size [24px] - Размер иконки (ширина и высота)
+ * @param {String} $bg-size [24px] - Размер фона (contain)
+ */
+@mixin icon($url, $size: 24px, $pseudo: before, $bg-size: contain) {
+	&::#{$pseudo} {
+		content: "";
+		display: inline-flex;
+		width: $size;
+		height: $size;
+		background-image: $url;
+		background-size: $bg-size;
+		background-repeat: no-repeat;
+		background-position: center;
+		flex-shrink: 0;
+		transition: all 0.3s ease-in-out;
+		@content;
+	}
+}
+
+@mixin mb($value, $pseudo: "last-child") {
+	&:not(:#{$pseudo}) {
+		margin-bottom: $value;
+	}
+}
+
+@mixin pb($value, $pseudo: "last-child") {
+	&:not(:#{$pseudo}) {
+		padding-bottom: $value;
+	}
+}

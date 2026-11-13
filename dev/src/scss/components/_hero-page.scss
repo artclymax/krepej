@@ -1,0 +1,14 @@
+@use "../tools" as *;
+.hero-page {
+	padding-top: 24px;
+	&__container {
+		@include flex-column;
+		gap: adapt(56, 32, $mobile);
+	}
+
+	&__breadcrumbs {
+	}
+
+	&__title {
+	}
+}

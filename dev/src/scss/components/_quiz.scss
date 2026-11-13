@@ -1,0 +1,371 @@
+@use "../tools" as *;
+/* Все формы по умолчанию скрыты */
+.quiz-form {
+	display: none;
+}
+
+/* Активный шаг */
+.quiz-step {
+	display: none;
+}
+
+.quiz-step.is-active {
+	display: block;
+}
+
+/* Прогресс */
+.quiz-progress {
+	margin-bottom: 15px;
+}
+
+.quiz-progress__bar {
+	height: 6px;
+	width: 0%;
+	background: #000;
+	border-radius: 3px;
+	transition: width 0.3s ease;
+}
+
+.quiz-progress__text {
+	margin-top: 5px;
+	font-size: 14px;
+}
+
+/* Кнопка назад */
+.quiz-back-global {
+	margin-top: 25px;
+	padding: 10px 20px;
+	cursor: pointer;
+	background: #eee;
+	border: none;
+	border-radius: 6px;
+	transition: background 0.2s ease;
+
+	&:hover {
+		background: #ddd;
+	}
+}
+
+/* Выбранный вариант */
+.wpcf7-list-item.is-selected .wpcf7-list-item-label {
+	background: #000;
+	color: #fff;
+	border-radius: 5px;
+	padding: 10px;
+}
+
+/* Скрытые радио */
+.wpcf7 input[type="radio"] {
+	position: absolute;
+	opacity: 0;
+	pointer-events: none;
+}
+
+//!=======================================
+
+.quiz {
+	&__container {
+		@include flex-column;
+		align-items: center;
+		gap: adapt(40, 20);
+	}
+
+	.section-header {
+		text-align: center;
+	}
+}
+
+.quiz-start {
+	max-width: 896px;
+	padding: adapt(40, 10);
+	border: 1px solid rgba(15, 23, 42, 0.05);
+	box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.05);
+	border-radius: 12px;
+	@include media($mobile) {
+		background: var(--color-gray-2);
+	}
+	&__title {
+		text-align: center;
+		&:not(:last-child) {
+			margin-bottom: adapt(24, 10);
+		}
+	}
+
+	&__btn-box {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 10px adapt(24, 10);
+	}
+
+	&__btn {
+		flex: 1;
+		@include media($mobile) {
+			flex: 1 1 100%;
+		}
+	}
+}
+.is-active {
+}
+.title-2 {
+}
+.quiz-start-btn {
+	border: 2px solid rgba(15, 23, 42, 0.05);
+	border-radius: adapt(24, 8);
+	background: rgba(241, 245, 249, 0.2);
+	padding: adapt(34, 10);
+	text-align: left;
+	transition: all 0.3s;
+
+	@include media($mobile) {
+		background: var(--color-dark-btn);
+		color: var(--color-white);
+		.quiz-start-btn__title {
+			color: var(--color-white);
+			font-weight: 600;
+		}
+	}
+
+	@include hover {
+		background: var(--color-dark-btn);
+		color: var(--color-white);
+		.quiz-start-btn__title {
+			color: var(--color-white);
+		}
+		.quiz-start-btn__text {
+			opacity: 1;
+			color: var(--color-white);
+		}
+	}
+
+	&__icon {
+		border-radius: 8px;
+		@include square(40px);
+		box-shadow:
+			0 1px 2px -1px rgba(0, 0, 0, 0.1),
+			0 1px 3px 0 rgba(0, 0, 0, 0.1);
+		@include flex-center;
+		color: var(--color-dark-btn);
+		background: var(--color-white);
+
+		&:not(:last-child) {
+			margin-bottom: adapt(40, 10);
+		}
+
+		svg {
+			@include square(20px);
+		}
+	}
+
+	&__title {
+		@include reset;
+		font-weight: 700;
+		font-size: 20px;
+		letter-spacing: -0.03em;
+		color: var(--color-dark-btn);
+		transition: all 0.3s;
+		&:not(:last-child) {
+			margin-bottom: 8px;
+		}
+	}
+
+	&__text {
+		@include reset;
+		opacity: 0.9;
+		font-size: adapt(14, 12);
+	}
+}
+.quiz-form {
+	border: 1px solid rgba(15, 23, 42, 0.05);
+	border-radius: 12px;
+	padding: adapt(20, 10);
+	width: 100%;
+	max-width: 896px;
+
+	&__bottom {
+		display: flex;
+		align-items: center;
+		gap: 24px;
+		justify-content: space-between;
+		margin-top: 20px;
+		padding-top: 14px;
+		border-top: 1px solid var(--color-dark-btn-05);
+		.quiz-back-global {
+			@include reset;
+			flex-shrink: 0;
+			background: var(--color-0);
+			display: flex;
+			align-items: center;
+			gap: 8px;
+			@include text-button;
+			opacity: 0.8;
+			transition: all 0.3s;
+
+			&::before {
+				content: "";
+				flex-shrink: 0;
+				@include square(16px);
+				@include bgimg(url("../../../public/images/icons/link-back.svg"));
+			}
+
+			@include hover {
+				opacity: 1;
+				transform: translateX(-4px);
+			}
+		}
+	}
+
+	&__list {
+		@include reset-list;
+		display: flex;
+		flex-wrap: wrap;
+		gap: 8px;
+		@include media($mobile-sm) {
+			flex-direction: column;
+		}
+		li {
+			display: flex;
+			@include text-overline;
+			color: var(--color-gray);
+
+			&::before {
+				content: "";
+				@include square(12px);
+				@include bgimg(url("../../../list-checkbox.svg"));
+			}
+		}
+	}
+}
+
+.quiz-progress {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
+	gap: 12px;
+	padding-inline: adapt(20, 0);
+
+	&:not(:last-child) {
+		margin-bottom: adapt(40, 10);
+	}
+
+	&_percent {
+		font-weight: 700;
+		font-size: 10px;
+		color: var(--color-dark-btn);
+	}
+
+	&__text {
+		font-weight: 700;
+		font-size: 10px;
+		letter-spacing: 0.2em;
+		text-transform: uppercase;
+		opacity: 0.8;
+	}
+
+	&__bar-wrapper {
+		flex: 1 1 100%;
+		background: rgba(15, 23, 42, 0.05);
+		border-radius: 3px;
+	}
+
+	&__bar {
+		background: var(--color-dark-btn);
+	}
+}
+.quiz-current {
+}
+.quiz-percent {
+}
+.quiz-back-global {
+}
+.icon {
+}
+
+.quiz-steps {
+	padding-inline: adapt(20, 0);
+}
+
+.quiz-step {
+	&[data-step="1"] {
+		--bg-icon: url("../../../public/images/icons/quiz-home.svg");
+	}
+	&[data-step="2"] {
+		--bg-icon: url("../../../public/images/icons/quiz-paint.svg");
+	}
+	&[data-step="3"] {
+		--bg-icon: url("../../../public/images/icons/quiz-place.svg");
+	}
+	&[data-step="4"] {
+		--bg-icon: url("../../../public/images/icons/quiz-time.svg");
+	}
+	&__title {
+		&:not(:last-child) {
+			margin-bottom: adapt(40, 10);
+		}
+	}
+
+	&__radio-box {
+		& > p {
+			@include reset;
+		}
+		.wpcf7-form-control {
+			display: grid;
+			grid-template-columns: repeat(2, 1fr);
+			gap: 20px adapt(40, 20);
+
+			@include media($mobile) {
+				grid-template-columns: 1fr;
+			}
+		}
+
+		.wpcf7-list-item {
+			@include reset;
+			height: 100%;
+			transition: all 0.3s;
+
+			@include hover {
+				//transform: translateY(-4px);
+			}
+		}
+
+		.wpcf7-list-item-label {
+			display: flex;
+			gap: 20px;
+			align-items: center;
+
+			padding: 10px;
+			border: 2px solid rgba(15, 23, 42, 0.05);
+			border-radius: 8px;
+			background: rgba(241, 245, 249, 0.2);
+			height: 100%;
+
+			font-weight: 600;
+			color: var(--color-dark-btn);
+			transition: all 0.3s;
+			&::before {
+				content: "";
+				flex-shrink: 0;
+				@include square(40px);
+
+				@include bgimg(var(--bg-icon), 20px);
+			}
+
+			@include hover {
+				border-color: var(--color-gray);
+			}
+
+			@include media($mobile) {
+				font-weight: 400;
+			}
+		}
+		// ACTIVE
+		.wpcf7-list-item.is-selected .wpcf7-list-item-label {
+			border-color: var(--color-dark-btn);
+			background: inherit;
+			color: inherit;
+			//&::before {
+			//	filter: invert(100%);
+			//}
+		}
+	}
+}

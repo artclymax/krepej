@@ -1,0 +1,34 @@
+@use "../tools" as *;
+.category {
+	@include reset-list;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: center;
+	gap: 12px;
+
+	&__item {
+	}
+
+	&__link {
+		@include reset-link;
+		font-weight: 500;
+		font-size: 14px;
+		line-height: 140%;
+		display: flex;
+		text-align: center;
+		border-radius: 2px;
+		padding: adapt(10, 8) adapt(20, 10);
+		background: var(--color-light-bd);
+		color: var(--color-dark);
+		transition: all 0.3s;
+
+		@include hover {
+			background: var(--color-accent-hover);
+		}
+
+		&.active {
+			background: var(--color-accent);
+		}
+	}
+}

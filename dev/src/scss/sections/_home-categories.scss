@@ -1,0 +1,78 @@
+@use "../tools" as *;
+
+.home-categories {
+	&__container {
+	}
+
+	&__header {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 24px;
+	}
+
+	&__title {
+	}
+
+	&__btn {
+	}
+
+	&__grid {
+		gap: 24px;
+		--min: 280px;
+
+		@include media($mobile) {
+			--min: 160px;
+			gap: 16px 8px;
+		}
+	}
+
+	&__card {
+	}
+}
+.categories-card {
+	@include reset-link;
+	flex-direction: column;
+	background: var(--color-white);
+
+	@include hover {
+		color: var(--color-accent);
+		.categories-card__overlay-text {
+			opacity: 1;
+		}
+	}
+
+	&__image {
+		height: adapt(220, 130, $mobile, $tablet);
+		position: relative;
+	}
+
+	&__overlay-text {
+		position: absolute;
+		z-index: 1;
+		width: 100%;
+		height: 100%;
+		top: 0;
+		left: 0;
+		font-weight: 500;
+		color: var(--color-dark);
+		display: flex;
+		justify-content: center;
+		align-items: center;
+
+		text-align: center;
+		text-transform: uppercase;
+		@include overlay(var(--color-white), 0.7) {
+			z-index: -1;
+		}
+		opacity: 0;
+		transition: all 0.3s ease-in-out;
+	}
+
+	&__title {
+		padding: adapt(20, 8, $mobile);
+		text-transform: uppercase;
+		text-align: center;
+		transition: all 0.3s ease-in-out;
+	}
+}

@@ -1,0 +1,416 @@
+@use "../tools" as *;
+@use "../components/btn" as *;
+
+// ! > P
+.form-wrapper p {
+	margin: 0;
+	display: grid;
+	justify-items: start;
+	gap: 20px;
+	grid-template-columns: 1fr;
+
+	@include media($mobile) {
+		//grid-template-columns: 1fr;
+	}
+
+	br {
+		display: none;
+	}
+
+	.wpcf7-form-control-wrap[data-name^="textarea"],
+	.wpcf7-form-control-wrap[data-name^="acceptance"],
+	.form-field-full {
+		grid-column: 1 / -1;
+		width: 100%;
+	}
+	.wpcf7-spinner {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		z-index: 55;
+	}
+	.wpcf7-form-control-wrap[data-name^="acceptance"] {
+	}
+	input[type="submit"],
+	input[type="button"] {
+		text-wrap: wrap;
+		max-width: 100%;
+	}
+	.wpcf7-not-valid-tip {
+		position: absolute;
+		left: 0px;
+		font-size: adapt(12, 10);
+		top: 0;
+		transform: translateY(-100%);
+		font-weight: 300;
+	}
+}
+
+/*
+.form-radio {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+
+	@include media($mobile) {
+		gap: 12px;
+	}
+
+	.wpcf7-list-item {
+		margin: unset;
+	}
+
+	label {
+		position: relative;
+
+		input {
+			display: none;
+		}
+		span {
+			display: flex;
+			font-size: 0;
+			opacity: 1;
+			transition: all 0.3s;
+			&::after {
+				content: "";
+				display: flex;
+				@include square(28px);
+				background-color: var(--bd-line);
+				background-size: 70%;
+				background-repeat: no-repeat;
+				border: 1px solid var(--color-0);
+				border-radius: 50%;
+				transition: all 0.3s;
+				overflow: hidden;
+				opacity: 0.7;
+				[data-theme="light"] & {
+					background-image: var(--bg-icon, url("../../../public/images/icons/phone.svg"));
+				}
+				[data-theme="dark"] & {
+					background-image: var(--bg-icon, url("../../../public/images/icons/phone--dark.svg"));
+				}
+			}
+			@include hover-icon;
+		}
+		input:checked ~ span {
+			&::after {
+				opacity: 1;
+				border-color: var(--main-text);
+			}
+		}
+
+		&.viber {
+			--bg-icon: var(--vb);
+			span::after {
+				background-size: 110%;
+			}
+		}
+		&.telegram {
+			--bg-icon: url("../../../public/images/icons/tg.svg");
+			span::after {
+				background-size: 110%;
+			}
+		}
+		&.whatsapp {
+			--bg-icon: url("../../../public/images/icons/wh.svg");
+			span::after {
+				background-size: 110%;
+			}
+		}
+	}
+}
+*/
+.form-input {
+	@include text-caption;
+	border: none;
+	background: transparent;
+	width: 100%;
+
+	border: 1px solid var(--graphite-500);
+	border-radius: 14px;
+	padding: 24px 16px;
+
+	color: var(--white-60);
+	background: var(--black-800);
+}
+//! === textarea
+
+.form-textarea {
+	@extend .form-input;
+	resize: none;
+	height: 100px;
+}
+
+//! form-btn
+.form-btn {
+	text-wrap: wrap;
+	max-width: 100%;
+	@include media($mobile-sm) {
+		margin-top: 12px;
+	}
+}
+//.form-small {
+//	display: flex;
+//	text-align: center;
+//	width: 100%;
+//	justify-content: center;
+//	//margin-top: 10px;
+//	color: rgba(15, 23, 42, 0.2);
+//}
+/*
+.form-checkbox {
+	display: flex;
+	//align-items: center;
+	gap: 10px;
+	&__input {
+		display: none;
+
+		&:checked ~ .form-checkbox__checkbox {
+			&::before {
+				opacity: 1;
+			}
+		}
+	}
+
+	&__checkbox {
+		flex-shrink: 0;
+		display: flex;
+		width: 20px;
+		height: 20px;
+		border: 1px solid var(--color-gray);
+		border-radius: 2px;
+		background-color: var(--color-light);
+		position: relative;
+
+		&::before {
+			content: "";
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			//background-color: var(--color-accent);
+			background-image: url("../../../public/images/icons/check.svg");
+			background-position: center center;
+			background-size: 70%;
+			background-repeat: no-repeat;
+			transition: all 0.3s;
+			opacity: 0;
+		}
+	}
+
+	&__text {
+		line-height: 1;
+		padding-top: 0.1em;
+		a {
+			text-decoration: underline;
+			color: inherit;
+			transition: all 0.3s;
+			@include hover {
+				color: var(--color-accent);
+			}
+		}
+	}
+}
+*/
+//! FORM-FIELD
+
+.form-field {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	width: 100%;
+
+	&__label {
+	}
+	&__text {
+		@include text-caption;
+		color: var(--white-80);
+	}
+
+	&__input {
+		color: var(--color-dark);
+		&::placeholder {
+			opacity: 0.8;
+		}
+	}
+
+	&__textarea {
+		resize: none;
+	}
+}
+
+//! FORM-FILE
+/*
+.file-label {
+	display: flex;
+	gap: 7px;
+	align-items: center;
+	@include text-overline;
+	color: rgba(15, 23, 42, 0.4);
+	&__text {
+		//color: var(--color-accent);
+		position: relative;
+		display: inline-flex;
+		align-items: center;
+		gap: 8px;
+		transition: all 0.3s;
+		@include hover {
+			color: var(--color-dark-btn);
+		}
+		&::before {
+			content: "";
+			flex-shrink: 0;
+			width: 18px;
+			height: 18px;
+			background-position: center;
+			background-size: contain;
+			background-repeat: no-repeat;
+			background-image: url("../../../public/images/icons/file-icon.svg");
+		}
+	}
+
+	.form-file {
+		display: none;
+		opacity: 0;
+		position: absolute;
+		z-index: -1000;
+		pointer-events: none;
+	}
+
+	.wpcf7-form-control-wrap {
+		order: 2;
+		color: var(--color-dark-btn);
+	}
+}
+*/
+/*
+.form-section__wrapper {
+	br {
+		display: none;
+	}
+}
+.wpcf7-form-control-wrap {
+	@include media($mobile) {
+		width: 100%;
+		flex: 1 1 100%;
+
+		input {
+			width: 100%;
+		}
+	}
+}
+// cf-7 file
+.wpcf7-form-control-wrap[data-name^="file"] {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	flex: 1;
+
+	@include media($mobile) {
+		width: 100%;
+		flex: 1 1 100%;
+	}
+
+	input {
+		display: none;
+	}
+	.file-label {
+		display: flex;
+		align-items: center;
+		flex: 1;
+		gap: 12px;
+		@include media($mobile) {
+			flex-direction: column;
+			align-items: flex-start;
+		}
+	}
+	.file-label-btn {
+		@extend .btn;
+		@extend .btn--stroke;
+		max-width: 200px;
+		color: var(--color-dark);
+		@include hover {
+			color: var(--color-dark);
+		}
+	}
+	.file-text {
+		order: 2;
+	}
+}
+*/
+
+//!cf-7 accept
+.wpcf7-form-control-wrap[data-name^="acceptance"] {
+	display: flex;
+	align-items: center;
+	width: 100%;
+
+	.wpcf7-list-item {
+		margin: unset;
+	}
+	//! CHECKBOX-LABEL
+	.wpcf7-list-item-label {
+		display: flex;
+		gap: 10px;
+		align-items: center;
+
+		&::before,
+		&::after {
+			display: none;
+		}
+		.form-checkbox-icon {
+			display: flex;
+			@include square(28px);
+			border: 1px solid var(--primary-blue-500);
+			border-radius: 4px;
+			position: relative;
+			flex-shrink: 0;
+			overflow: hidden;
+
+			&::before {
+				content: "";
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				background-image: url("../../../public/icons/check-icon.svg");
+				background-position: center center;
+				background-size: 12px;
+				background-repeat: no-repeat;
+				transition: all 0.3s;
+				background-color: var(--primary-blue-500);
+				opacity: 0;
+				border-radius: 4px;
+			}
+		}
+		.form-checkbox-text {
+			@include text-caption;
+			color: var(--color-white);
+		}
+		span {
+			padding-top: 0.1em;
+		}
+
+		a {
+			//text-decoration: none;
+
+			color: inherit;
+			transition: all 0.3s;
+			@include hover {
+				//opacity: 0.4;
+				color: var(--primary-blue-500);
+			}
+		}
+	}
+	input {
+		display: none;
+	}
+	input:checked ~ .wpcf7-list-item-label {
+		.form-checkbox-icon::before {
+			opacity: 1;
+		}
+	}
+}

@@ -1,0 +1,131 @@
+@use "../tools" as *;
+
+.footer {
+	background: var(--color-gray-dark);
+	color: var(--color-white);
+	padding-block: 60px 32px;
+	font-size: 14px;
+
+	@include media($mobile) {
+		padding-block: 32px 48px;
+	}
+	&__container {
+		@include flex-column;
+		gap: 16px;
+
+		@include media($mobile) {
+			gap: 60px;
+		}
+	}
+
+	&__top {
+		display: grid;
+		grid-template-columns: 1.2fr 1fr 1.1fr;
+		gap: 44px adapt(60, 30, $tablet, $laptop-sm);
+		align-items: start;
+
+		@include media($tablet) {
+			grid-template-columns: 1fr 1fr;
+		}
+		@include media($mobile) {
+			grid-template-columns: 1fr;
+		}
+	}
+
+	&__info {
+		display: flex;
+		align-items: center;
+		gap: 20px;
+
+		@include media($mobile) {
+			flex-direction: column;
+			text-align: center;
+		}
+	}
+
+	&__logo {
+		flex-shrink: 0;
+		a {
+			height: 86px;
+		}
+	}
+
+	&__descr {
+		font-size: 14px;
+		color: var(--color-gray);
+	}
+
+	&__nav {
+	}
+
+	&__contacts {
+	}
+
+	&__bottom {
+		font-size: 14px;
+		color: var(--color-gray);
+	}
+
+	&__bottom-links {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		flex-wrap: wrap;
+
+		@include media($mobile) {
+			flex-direction: column;
+		}
+	}
+
+	&__bottom-link {
+		@include hover-link(var(--color-accent));
+	}
+}
+
+.footer-contacts {
+	@include flex-column;
+	gap: 14px;
+	&__title {
+		@include reset;
+		color: var(--color-gray);
+
+		@include media($mobile) {
+			text-align: center;
+		}
+	}
+
+	&__list {
+		@include reset-list;
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 14px 6px;
+		font-weight: 600;
+		a {
+			@include hover-link(var(--color-accent));
+		}
+	}
+
+	&__phones {
+	}
+
+	&__item {
+	}
+
+	&__link {
+	}
+
+	&__emails {
+	}
+}
+
+.footer-menu {
+	@include reset-list;
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 14px;
+	font-weight: 600;
+
+	a {
+		@include hover-link(var(--color-accent));
+	}
+}

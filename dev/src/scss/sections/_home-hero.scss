@@ -1,0 +1,53 @@
+@use "../tools" as *;
+
+.home-hero {
+	padding-top: adapt(16, 10, $mobile, $laptop-sm);
+	padding-bottom: var(--section-padding-05);
+
+	&__container {
+	}
+
+	&__wrapper {
+		position: relative;
+		z-index: 1;
+		padding-inline: adapt(56, 10, $mobile, $laptop-sm);
+		padding-block: adapt(112, 44, $mobile, $laptop-sm) adapt(146, 44, $mobile, $laptop-sm);
+		background: var(--color-dark);
+		color: var(--color-white);
+	}
+
+	&__content {
+		max-width: 603px;
+		@include flex-column;
+		gap: adapt(32, 24, $mobile, $laptop-sm);
+	}
+
+	&__title {
+	}
+
+	&__descr {
+		font-size: 18px;
+	}
+
+	&__btn {
+		@include hover {
+			background: var(--color-white);
+			color: var(--color-accent);
+		}
+	}
+
+	&__image {
+		@include image-abs;
+		z-index: -1;
+	}
+}
+.container {
+}
+.title-1 {
+}
+.descr {
+}
+.btn {
+}
+.image-box {
+}

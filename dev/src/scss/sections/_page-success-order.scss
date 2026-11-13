@@ -1,0 +1,44 @@
+@use "../tools" as *;
+
+.page-success-order {
+	padding-top: 24px;
+	&__container {
+	}
+
+	&__hero {
+	}
+
+	&__content {
+		text-align: center;
+		@include flex-column;
+		gap: 24px;
+		justify-content: center;
+	}
+
+	&__icon {
+	}
+
+	&__descr {
+
+		a {
+			@include hover-link(var(--color-accent));
+			font-weight: 700;
+		}
+	}
+}
+.page-success-order-hero {
+	@include flex-column;
+	gap: adapt(56, 32, $mobile);
+
+	&__breadcrumbs {
+	}
+
+	&__title {
+		text-align: center;
+	}
+}
+.icon--success {
+	--width: 86px;
+	justify-content: center;
+	--icon-bg: url("../../../public/images/icons/icon-success.svg");
+}

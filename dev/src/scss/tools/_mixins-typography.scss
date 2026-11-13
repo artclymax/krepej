@@ -1,0 +1,73 @@
+@use "functions" as *;
+@use "mixins" as *;
+@use "constants" as *;
+
+@mixin title-1 {
+	@include reset;
+
+	font-weight: 900;
+	font-size: adapt(56, 28, $mobile, $laptop-sm);
+	line-height: 130%;
+	hyphens: auto;
+	
+}
+
+@mixin title-2 {
+	@include reset;
+	font-weight: 900;
+	font-size: adapt(48, 24, $mobile, $laptop-sm);
+	line-height: 130%;
+	text-transform: uppercase;
+	color: var(--color-dark);
+	hyphens: auto;
+	
+}
+@mixin title-product-2 {
+	@include reset;
+	font-weight: 900;
+	font-size: adapt(30, 24, $mobile, $laptop-sm);
+	line-height: 130%;
+	color: var(--color-dark);
+	hyphens: auto;
+	
+}
+
+@mixin title-3 {
+	@include reset;
+	font-weight: 700;
+	font-size: 18px;
+	line-height: 130%;
+	color: var(--color-dark);
+	hyphens: auto;
+	
+}
+
+@mixin text-body {
+	font-weight: 400;
+	font-size: 16px;
+	line-height: 130%;
+}
+
+@mixin text-price {
+	font-weight: 700;
+	font-size: 24px;
+	line-height: 130%;
+}
+
+@mixin text-btn {
+	font-weight: 500;
+	font-size: 18px;
+	line-height: 130%;
+}
+
+@mixin text-body-s {
+	font-weight: 400;
+	font-size: 14px;
+	line-height: 130%;
+}
+
+@mixin text-menu {
+	font-weight: 600;
+	font-size: 16px;
+	line-height: 130%;
+}

@@ -1,0 +1,128 @@
+@use "../tools" as *;
+
+.hero-404 {
+	position: relative;
+	display: flex;
+	//align-items: center;
+	//justify-content: center;
+	background: var(--color-light);
+	&__container {
+		width: 100%;
+		position: relative;
+		z-index: 2;
+	}
+
+	&__wrapper {
+		--p-top: #{adapt(160, 36)};
+		--b-bottom: var(--section-padding);
+		min-height: calc(100dvh - var(--p-top) - var(--b-bottom));
+		padding-block: var(--p-top) var(--b-bottom);
+		@include flex-column;
+		align-items: flex-start;
+		//justify-content: center;
+		//text-align: center;
+		//gap: adapt(32, 24);
+		max-width: 600px;
+		//margin: 0 auto;
+
+		@include media($tablet) {
+			padding-bottom: adapt(600, 300, $finishBreakpoint, $tablet);
+		}
+
+		@include media($mobile) {
+			//margin-bottom: 200px;
+		}
+	}
+
+	&__title {
+		color: inherit;
+		text-wrap: balance;
+		&:not(:last-child) {
+			margin-bottom: adapt(24, 16);
+		}
+	}
+
+	&__404 {
+		//display: block;
+		//width: adapt(1200, 340);
+
+		//img {
+		//	width: 100%;
+		//}
+	}
+
+	&__descr {
+		//font-size: 18px;
+		//font-weight: 300;
+		&:not(:last-child) {
+			margin-bottom: adapt(44, 24);
+		}
+	}
+
+	&__btn {
+		@include media($mobile) {
+			width: 100%;
+		}
+	}
+
+	&__image {
+		@include image-abs;
+		//z-index: -1;
+		//@include overlay(var(--color-black), 0.4);
+
+		//--object-pos: 96%;
+
+		@include media($tablet) {
+			--object-pos: bottom;
+			//height: 50% !important;
+			//left: unset !important;
+			//top: unset !important;
+			//right: 0 !important;
+			//bottom: 0 !important;
+		}
+	}
+}
+.hero-thank-you {
+	.hero-404 {
+		&__image {
+			@include media($mobile) {
+				height: 100% !important;
+			}
+		}
+	}
+}
+//.hero-thank-you {
+//	//color: var(--black-900);
+//	.hero-404__title {
+
+//	}
+//	.hero-404__descr {
+//		@include body-s;
+//		@include media($mobile, min) {
+//			@include title-3;
+//		}
+//		//color: var(--black-900);
+//	}
+
+//	&__form {
+//		@include flex-column;
+//		gap: 20px;
+//		align-items: center;
+//		max-width: 386px;
+//		width: 100%;
+//		p {
+//			@include label;
+//		}
+//	}
+
+//	&__input {
+//		//width: 100%;
+//		//background: var(--white-100);
+//		@include overline;
+//		padding: 20px 24px;
+//	}
+
+//	&__btn {
+//		//max-width: 100%;
+//	}
+//}
